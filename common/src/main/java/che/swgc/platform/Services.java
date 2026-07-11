@@ -16,6 +16,9 @@ public class Services {
     private Services() {}
 
     public static void setClientBridge(SwgcClientBridge bridge) {
+        if (bridge == null) {
+            return;
+        }
         clientBridge = bridge;
         CLIENT = bridge;
     }

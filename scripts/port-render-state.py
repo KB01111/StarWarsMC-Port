@@ -13,9 +13,7 @@ REPLACEMENTS = [
     ("net.minecraft.core.RotationAxis", "com.mojang.math.Axis"),
     ("context.getPart(", "context.bakeLayer("),
     ("super(net.minecraft.client.renderer.rendertype.RenderType::getEntitySolid)", "super(root)"),
-    ("extends che.swgc.client.compat.model.SinglePartEntityModel<", "extends che.swgc.client.compat.model.SinglePartEntityModel<"),
     ("che.swgc.client.compat.render.MultiBufferSource", "net.minecraft.client.renderer.MultiBufferSource"),
-    (".getEntityModels()", ".getEntityModels()"),
     ("EntityModelLoader", "EntityModelSet"),
     ("getEntityModelLoader()", "getEntityModels()"),
     ("BuiltinItemRendererRegistry", "SwgcItemRendererRegistry"),
@@ -80,8 +78,8 @@ def port_file(path: Path) -> bool:
             "setupAnim(S state, float limbAngle",
         )
         # Replace entity. with state.entity. when state has entity field
-        if "state.entity" not in text and "SwgcMobRenderState" in text or "extends CommandableMob" in text or "SwgcMobRenderState" in path.read_text(encoding='utf-8'):
-            pass
+        if ("state.entity" not in text) and (("SwgcMobRenderState" in text) or ("extends CommandableMob" in text)):
+            text = re.sub(r'\bentity\.', 'state.entity.', text)
 
     if text != original:
         path.write_text(text, encoding="utf-8")

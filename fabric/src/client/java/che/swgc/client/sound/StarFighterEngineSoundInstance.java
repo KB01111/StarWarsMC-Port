@@ -16,15 +16,15 @@ public class StarFighterEngineSoundInstance extends AbstractTickableSoundInstanc
 
    @Override
    public void tick() {
-      if (!this.mob.isRemoved() && this.mob.isNoGravity()) {
-         this.x = this.mob.getX();
-         this.y = this.mob.getY();
-         this.z = this.mob.getZ();
-         this.volume = 0.5F + this.mob.getSpeed();
-         this.pitch = 0.3F + this.mob.getSpeed() * 0.3F;
+      if (!this.entity.isRemoved() && this.entity.isNoGravity()) {
+         this.x = this.entity.getX();
+         this.y = this.entity.getY();
+         this.z = this.entity.getZ();
+         this.volume = 0.5F + this.entity.getSpeed();
+         this.pitch = 0.3F + this.entity.getSpeed() * 0.3F;
       } else {
          this.stop();
-         this.mob.engineHeard = false;
+         this.entity.engineHeard = false;
       }
    }
 }

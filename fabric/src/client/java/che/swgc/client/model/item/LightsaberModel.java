@@ -418,8 +418,6 @@ public class LightsaberModel extends che.swgc.client.compat.model.SinglePartEnti
             .addBox(-0.7F, -5.9F, -1.58F, 1.0F, 1.0F, 0.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(-0.002F))
             .texOffs(0, 19)
             .addBox(-1.5F, -4.9F, -1.5F, 3.0F, 3.0F, 3.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.1F))
-            .texOffs(0, 19)
-            .addBox(-1.5F, -4.9F, -1.5F, 3.0F, 3.0F, 3.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.1F))
             .texOffs(0, 25)
             .addBox(-1.5F, -8.1F, -1.5F, 1.0F, 3.0F, 3.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.1F))
             .texOffs(0, 11)

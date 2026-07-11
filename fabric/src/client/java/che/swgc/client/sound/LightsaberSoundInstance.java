@@ -20,15 +20,15 @@ public class LightsaberSoundInstance extends AbstractTickableSoundInstance {
 
    @Override
    public void tick() {
-      if (!this.mob.isRemoved()
-         && (LightsaberItem.isActive(this.mob.getMainHandItem()) || LightsaberItem.isActive(this.mob.getOffhandItem()))) {
-         this.x = this.mob.getX();
-         this.y = this.mob.getY();
-         this.z = this.mob.getZ();
+      if (!this.entity.isRemoved()
+         && (LightsaberItem.isActive(this.entity.getMainHandItem()) || LightsaberItem.isActive(this.entity.getOffhandItem()))) {
+         this.x = this.entity.getX();
+         this.y = this.entity.getY();
+         this.z = this.entity.getZ();
          this.volume = 0.25F
             + (float)(this.entity instanceof RemotePlayer
-                     ? this.mob.position().subtract(this.mob.xOld, this.mob.yOld, this.mob.zOld)
-                     : this.mob.getDeltaMovement())
+                     ? this.entity.position().subtract(this.entity.xOld, this.entity.yOld, this.entity.zOld)
+                     : this.entity.getDeltaMovement())
                   .length()
                * 0.25F;
       } else {

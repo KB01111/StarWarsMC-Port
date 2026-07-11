@@ -33,6 +33,8 @@ public class BlasterBoltRenderer extends EntityRenderer<BlasterBolt, SwgcEntityR
    public void extractRenderState(BlasterBolt entity, SwgcEntityRenderState state, float partialTick) {
       super.extractRenderState(entity, state, partialTick);
       state.entity = entity;
+      state.yaw = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
+      state.pitch = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
    }
 
    @Override
@@ -43,11 +45,9 @@ public class BlasterBoltRenderer extends EntityRenderer<BlasterBolt, SwgcEntityR
          return;
       }
 
-      float partialTick = state.ageInTicks % 1.0F;
-      float entityYaw = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
       poseStack.pushPose();
-      poseStack.mulPose(Axis.YP.rotationDegrees(entityYaw));
-      poseStack.mulPose(Axis.XP.rotationDegrees(-Mth.lerp(partialTick, entity.xRotO, entity.getXRot()) + 90.0F));
+      poseStack.mulPose(Axis.YP.rotationDegrees(state.yaw));
+      poseStack.mulPose(Axis.XP.rotationDegrees(-state.pitch + 90.0F));
       poseStack.translate(0.0F, -0.375F, 0.0F);
       Identifier texture = PlasmaRodModel.DEFAULT_TEXTURE;
       submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, this.model.renderType(texture), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, null, state.outlineColor, null);

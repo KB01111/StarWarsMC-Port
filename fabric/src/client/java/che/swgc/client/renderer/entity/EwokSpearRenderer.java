@@ -45,7 +45,7 @@ public class EwokSpearRenderer extends EntityRenderer<EwokSpear, SwgcEntityRende
 
       float partialTick = state.ageInTicks % 1.0F;
       poseStack.pushPose();
-      poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, spear.yRotO, spear.getYRot()) + 180.0F));
+      poseStack.mulPose(Axis.YP.rotationDegrees(Mth.rotLerp(partialTick, spear.yRotO, spear.getYRot()) + 180.0F));
       poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTick, spear.xRotO, spear.getXRot()) + 90.0F));
       submitNodeCollector.submitModel(
          this.model,

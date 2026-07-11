@@ -28,7 +28,7 @@ public class CloneItemRenderer implements ItemRenderer {
       String armor = SwgcItemData.getOrCreate(stack).getCompound("helmet")
          .flatMap(tag -> tag.getString("id").map(id -> id.replace("_helmet", "")))
          .orElse("swgc:clone_phase_2");
-      net.minecraft.client.model.geom.ModelPart part = armor.equals("swgc:clone_104th_Battalion") ? this.battalion104 : this.head;
+      net.minecraft.client.model.geom.ModelPart part = armor.equals("swgc:clone_104th_battalion") ? this.battalion104 : this.head;
       src.submitModelPart(
          part,
          poseStack,

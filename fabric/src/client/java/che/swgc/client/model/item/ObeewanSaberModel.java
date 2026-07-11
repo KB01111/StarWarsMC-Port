@@ -39,11 +39,7 @@ public class ObeewanSaberModel extends LightsaberModel {
    @Override
    public void setupAnim(che.swgc.client.render.SwgcMobRenderState state) {
       super.setupAnim(state);
-      float limbSwing = state.walkAnimationPos;
-      float limbSwingAmount = state.walkAnimationSpeed;
       float ageInTicks = state.ageInTicks;
-      float netHeadYaw = state.yRot;
-      float headPitch = state.xRot;
 
       this.wings.getAllParts().forEach(net.minecraft.client.model.geom.ModelPart::resetPose);
       float anim = ageInTicks % 200.0F;

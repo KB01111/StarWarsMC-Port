@@ -149,7 +149,7 @@ public class LightsaberItemRenderer implements ItemRenderer {
    }
 
    static {
-      addPropsNoModel(Identifier.fromNamespaceAndPath("swgc", "mastiff"), props -> props.glowing((anim, color) -> color & 16777215 + ((int)(anim * 255.0F) << 24)));
+      addPropsNoModel(Identifier.fromNamespaceAndPath("swgc", "mastiff"), props -> props.glowing((anim, color) -> (color & 16777215) + ((int)(anim * 255.0F) << 24)));
       addProps(
          LightsaberItem.OBEEWAN_ID,
          models -> new ObeewanSaberModel(models.bakeLayer(ObeewanSaberModel.LAYER_LOCATION)),

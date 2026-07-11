@@ -8,4 +8,6 @@ import net.minecraft.world.entity.Entity;
 public class SwgcEntityRenderState extends EntityRenderState {
    @Nullable
    public Entity entity;
+   public float yaw;
+   public float pitch;
 }

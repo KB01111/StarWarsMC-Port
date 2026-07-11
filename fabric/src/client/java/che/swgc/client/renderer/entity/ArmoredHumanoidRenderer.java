@@ -27,15 +27,18 @@ public class ArmoredHumanoidRenderer<T extends Mob> extends che.swgc.client.rend
       this.addLayer(new ItemInHandLayer<>(this));
    }
 
-   protected void scale(T entity, com.mojang.blaze3d.vertex.PoseStack poseStack, float f) {
+   @Override
+   protected void scale(SwgcMobRenderState state, com.mojang.blaze3d.vertex.PoseStack poseStack) {
       poseStack.scale(0.9375F, 0.9375F, 0.9375F);
    }
 
+   @Override
    @Nullable
-   protected net.minecraft.client.renderer.rendertype.RenderType getRenderShape(T entity, boolean bodyVisible, boolean visible, boolean glowing) {
+   protected net.minecraft.client.renderer.rendertype.RenderType getRenderShape(SwgcMobRenderState state, boolean bodyVisible, boolean visible, boolean glowing) {
       return null;
    }
 
+   @Override
    public Identifier getTextureLocation(SwgcMobRenderState state) {
       return Identifier.fromNamespaceAndPath("minecraft", "textures/entity/steve.png");
    }

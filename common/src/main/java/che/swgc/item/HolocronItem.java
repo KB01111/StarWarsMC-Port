@@ -49,7 +49,7 @@ public class HolocronItem extends Item {
       return new HolocronItem(ChatFormatting.DARK_RED, ForcePossessor::swgc$getForceDarkSide, ForcePossessor::addForceDarkSide, 8, 18, 40, 55, 70);
    }
 
-   public void appendHoverText(ItemStack stack, Item.Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltipAdder, TooltipFlag flag) {
+   public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltipAdder, TooltipFlag flag) {
       super.appendHoverText(stack, context, display, tooltipAdder, flag);
       tooltipAdder.accept(Component.translatable("item.swgc.holocron.desc").withStyle(this.color));
    }

@@ -8,6 +8,8 @@ import che.swgc.client.gui.ModGui;
 import che.swgc.client.gui.SwgcHudElements;
 import che.swgc.client.renderer.item.SwgcItemRendererRegistry;
 import che.swgc.force.ForcePossessor;
+import che.swgc.platform.FabricSwgcClientBridge;
+import che.swgc.platform.Services;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
@@ -31,12 +33,15 @@ public class FabricClientClass implements ClientModInitializer {
 
    @Override
    public void onInitializeClient() {
-      che.swgc.platform.Services.setClientBridge(new che.swgc.platform.FabricSwgcClientBridge());
+      Services.setClientBridge(new FabricSwgcClientBridge());
       SwgcOptions.init(i -> {
       });
       readSettings();
       ClientLifecycleEvents.CLIENT_STOPPING.register(client -> saveSettings());
       ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(SwgcSplashManager.INSTANCE);
+      ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener((synchronizer, resourceManager, profiler, executor) ->
+         synchronizer.whenPrepared(ignored -> executor.execute(SwgcItemRendererRegistry::clearArmorModelsCache))
+      );
       SwgcClientRegister.registerEntityLayers((location, definition) -> ModelLayerRegistry.registerModelLayer(location, definition::get));
       SwgcClientRegister.registerEntityRenderers(EntityRendererRegistry::register, BlockEntityRendererRegistry::register);
       SwgcItemRendererRegistry.registerAll();

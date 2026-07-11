@@ -21,8 +21,6 @@ REPLACEMENTS = (
     ("new net.minecraft.resources.Identifier(\"modid\", \"frog\")", "Identifier.fromNamespaceAndPath(\"swgc\", \"frog\")"),
     ("getCachedState()", "getBlockState()"),
     ("OverlayTexture.DEFAULT_UV", "OverlayTexture.NO_OVERLAY"),
-    ("ModelLayers.PLAYER_INNER_ARMOR", "ModelLayers.PLAYER_ARMOR.head()"),
-    ("ModelLayers.PLAYER_OUTER_ARMOR", "ModelLayers.PLAYER_ARMOR.chest()"),
 )
 
 # Fix SinglePartEntityModel wrong super with RenderTypes

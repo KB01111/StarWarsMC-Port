@@ -91,7 +91,7 @@ Release JAR output: `fabric/build/libs/swgc-fabric-26.2-1.0.2.0.jar`
 
 ## Project Layout
 
-```
+```text
 common/          Server-safe game logic, items, entities, assets
 fabric/          Fabric loader entrypoints + client rendering
 scripts/         Decompile/remap pipeline + codegen

@@ -30,9 +30,9 @@ public class ForcePikeItemRenderer extends SimpleItemRenderer<ForcePikeModel> {
             float[] zCoords = new float[4];
             xCoords[0] = xCoords[2] = zCoords[0] = zCoords[2] = 0.0F;
             xCoords[1] = random.nextFloat() * 0.375F - 0.1875F;
-            xCoords[2] = random.nextFloat() * 0.375F - 0.1875F;
+            xCoords[3] = random.nextFloat() * 0.375F - 0.1875F;
             zCoords[1] = random.nextFloat() * 0.375F - 0.1875F;
-            zCoords[2] = random.nextFloat() * 0.375F - 0.1875F;
+            zCoords[3] = random.nextFloat() * 0.375F - 0.1875F;
             Matrix4f matrix4f = pose.pose();
 
             for (int layer = 0; layer < 4; layer++) {

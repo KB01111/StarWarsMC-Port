@@ -31,6 +31,10 @@ public final class SwgcItemRendererRegistry {
    private SwgcItemRendererRegistry() {
    }
 
+   public static void clearArmorModelsCache() {
+      ARMOR_MODELS.clear();
+   }
+
    public void register(ItemLike itemLike, SwgcItemRendererRegistry.DynamicItemRenderer renderer) {
       Identifier rendererId = Identifier.fromNamespaceAndPath("swgc", BuiltInRegHelper.getPath(itemLike));
       registerRenderer(rendererId, models -> new DynamicItemRendererAdapter(renderer));
@@ -124,6 +128,7 @@ public final class SwgcItemRendererRegistry {
          net.minecraft.world.item.ItemDisplayContext mode,
          com.mojang.blaze3d.vertex.PoseStack matrices,
          net.minecraft.client.renderer.SubmitNodeCollector vertexConsumers,
+         float partialTick,
          int light,
          int overlay
       );
@@ -146,7 +151,7 @@ public final class SwgcItemRendererRegistry {
          int packedLight,
          int packedOverlay
       ) {
-         this.delegate.render(stack, ctx, poseStack, src, packedLight, packedOverlay);
+         this.delegate.render(stack, ctx, poseStack, src, partialTick, packedLight, packedOverlay);
       }
    }
 

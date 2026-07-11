@@ -42,22 +42,37 @@ def convert_setup_anim(text: str) -> str:
 
 
 def remove_prepare_mob_model(text: str) -> str:
-    return re.sub(
-        r"\n   public void prepareMobModel\(T entity[^\)]*\) \{.*?\n   \}\n",
-        "\n",
-        text,
-        flags=re.DOTALL,
-    )
+    pattern = r"\n   public void prepareMobModel\(T entity[^\)]*\) \{"
+    match = re.search(pattern, text)
+    if not match:
+        return text
+
+    start_pos = match.start()
+    brace_pos = match.end()
+    depth = 1
+    i = brace_pos
+
+    while i < len(text) and depth > 0:
+        if text[i] == '{':
+            depth += 1
+        elif text[i] == '}':
+            depth -= 1
+        i += 1
+
+    if depth == 0:
+        end_pos = i
+        while end_pos < len(text) and text[end_pos] in ' \t':
+            end_pos += 1
+        if end_pos < len(text) and text[end_pos] == '\n':
+            end_pos += 1
+        return text[:start_pos] + "\n" + text[end_pos:]
+
+    return text
 
 
 def fix_renderer_generics(text: str) -> str:
     text = re.sub(
-        r"extends che\.swgc\.client\.render\.SwgcMobRenderer<(\w+),\s*\w+Model(?:<\w+>)?>",
-        r"extends che.swgc.client.render.SwgcMobRenderer<\1, \1Model>",
-        text,
-    )
-    text = re.sub(
-        r"extends che\.swgc\.client\.render\.SwgcMobRenderer<(\w+),\s*(\w+Model)>",
+        r"extends che\.swgc\.client\.render\.SwgcMobRenderer<(\w+),\s*(\w+Model)(?:<\w+>)?>",
         r"extends che.swgc.client.render.SwgcMobRenderer<\1, \2>",
         text,
     )

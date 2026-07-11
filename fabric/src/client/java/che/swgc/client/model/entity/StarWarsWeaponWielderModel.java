@@ -259,7 +259,7 @@ public class StarWarsWeaponWielderModel extends che.swgc.client.compat.model.Sin
       }
 
       float yRot = netHeadYaw * (float) Math.PI / 180.0F;
-      float xRot = entity.getXRot() > 4 ? (float) (-Math.PI / 4) : headPitch * (float) Math.PI / 180.0F;
+      float xRot = Math.max((float) (-Math.PI / 4), headPitch * (float) Math.PI / 180.0F);
       this.head.yRot += yRot;
       this.head.xRot += xRot;
       if (entity.isCrouching()) {
@@ -275,8 +275,8 @@ public class StarWarsWeaponWielderModel extends che.swgc.client.compat.model.Sin
    }
 
    public boolean shouldOverride(net.minecraft.world.entity.LivingEntity entity) {
-      return !entity.isSwimming() && entity instanceof ForcePossessor && entity.getMainHandItem().getItem() instanceof LightsaberItem
-         || entity instanceof StarWarsWeaponWielder && ANIMATIONS_PER_ITEM.containsKey(entity.getMainHandItem().getItem());
+      return !entity.isSwimming() && (entity instanceof ForcePossessor && entity.getMainHandItem().getItem() instanceof LightsaberItem
+         || entity instanceof StarWarsWeaponWielder && ANIMATIONS_PER_ITEM.containsKey(entity.getMainHandItem().getItem()));
    }
 
    public void translateToItem(com.mojang.blaze3d.vertex.PoseStack poseStack, net.minecraft.world.entity.HumanoidArm arm) {

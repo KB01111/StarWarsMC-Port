@@ -764,6 +764,6 @@ public class Delta7BModel extends che.swgc.client.compat.model.SinglePartEntityM
       super.setupAnim(state);
       che.swgc.entity.StarFighter entity = (che.swgc.entity.StarFighter)state.entity;
       this.root.getAllParts().forEach(net.minecraft.client.model.geom.ModelPart::resetPose);
-      this.updateAnimation(entity.takeoffAnimState, ANIMATION, state.ageInTicks, entity.flightAnim() ? 1.0F : -1.0F);
+      this.updateAnimation(entity.takeoffAnimState, ANIMATION, state.ageInTicks);
    }
 }

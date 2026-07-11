@@ -16,6 +16,7 @@ public class EwokShamanRenderer extends che.swgc.client.render.SwgcMobRenderer<E
 
    public EwokShamanRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider.Context ctx) {
       super(ctx, new EwokShamanModel(ctx.bakeLayer(EwokShamanModel.LAYER_LOCATION)), 0.35F);
+      this.addLayer(new ItemInHandLayer<>(this));
    }
 
    @Override

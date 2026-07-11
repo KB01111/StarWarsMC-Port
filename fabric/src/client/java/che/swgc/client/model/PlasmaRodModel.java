@@ -68,7 +68,12 @@ public class PlasmaRodModel extends net.minecraft.client.model.Model.Simple {
       float blue,
       float alpha
    ) {
-      src.submitCustomGeometry(poseStack, renderType, (pose, buffer) -> this.renderOutline(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha));
+      src.submitCustomGeometry(poseStack, renderType, (pose, buffer) -> {
+         PoseStack lambdaPoseStack = new PoseStack();
+         lambdaPoseStack.last().pose().set(pose.pose());
+         lambdaPoseStack.last().normal().set(pose.normal());
+         this.renderOutline(lambdaPoseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+      });
    }
 
    private void renderOutline(

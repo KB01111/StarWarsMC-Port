@@ -184,22 +184,6 @@ public class JawaModel extends HumanoidModel<che.swgc.client.render.SwgcMobRende
    @Override
    public void setupAnim(che.swgc.client.render.SwgcMobRenderState state) {
       super.setupAnim(state);
-      this.head.y += 11.0F;
-      this.hat.y += 11.0F;
-      this.body.y += 11.0F;
-      this.jacket.y += 11.0F;
-      this.rightArm.x += 2.0F;
-      this.rightArm.y += 9.5F;
-      this.rightSleeve.x += 2.0F;
-      this.rightSleeve.y += 9.5F;
-      this.leftArm.x -= 2.0F;
-      this.leftArm.y += 9.5F;
-      this.leftSleeve.x -= 2.0F;
-      this.leftSleeve.y += 9.5F;
-      this.rightLeg.y += 5.0F;
-      this.rightPants.y += 5.0F;
-      this.leftLeg.y += 5.0F;
-      this.leftPants.y += 5.0F;
    }
 
    public void setArmAngle(net.minecraft.world.entity.HumanoidArm side, com.mojang.blaze3d.vertex.PoseStack poseStack) {

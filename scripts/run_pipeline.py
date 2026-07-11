@@ -73,7 +73,6 @@ def count_assets() -> dict[str, int]:
             counts[f"{label}_png"] = len(list(base.rglob("*.png")))
             counts[f"{label}_ogg"] = len(list(base.rglob("*.ogg")))
             counts[f"{label}_nbt"] = len(list(base.rglob("*.nbt")))
-            counts[f"{label}_java_decompiled"] = len(list((ROOT / "decompiled").rglob("*.java"))) if label == "extracted" else 0
     counts["decompiled_java"] = len(list((ROOT / "decompiled").rglob("*.java")))
     counts["remapped_java"] = len(list((ROOT / "remapped").rglob("*.java")))
     return counts

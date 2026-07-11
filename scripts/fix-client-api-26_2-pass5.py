@@ -26,7 +26,7 @@ SCALE_OVERRIDE = re.compile(
 
 def fix_scale_signature(text: str) -> str:
     return SCALE_OVERRIDE.sub(
-        "protected void scale(che.swgc.client.render.SwgcMobRenderState state, com.mojang.blaze3d.vertex.PoseStack poseStack",
+        "protected void scale(che.swgc.client.render.SwgcMobRenderState state, com.mojang.blaze3d.vertex.PoseStack poseStack)",
         text,
     )
 

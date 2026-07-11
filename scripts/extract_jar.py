@@ -35,6 +35,10 @@ def main():
     extract_dir.mkdir(parents=True)
 
     with zipfile.ZipFile(jar, "r") as zf:
+        for member in zf.namelist():
+            member_path = (extract_dir / member).resolve()
+            if not member_path.is_relative_to(extract_dir):
+                raise ValueError(f"Zip entry has unsafe path: {member}")
         zf.extractall(extract_dir)
 
     classes = list(extract_dir.rglob("*.class"))
