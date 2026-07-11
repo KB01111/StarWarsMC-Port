@@ -55,7 +55,7 @@ public abstract class MixinMinecraft {
       }
 
       if (flag) {
-         instance.selectedSlot = value;
+         instance.setSelectedSlot(value);
       }
    }
 }

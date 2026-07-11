@@ -1,41 +1,65 @@
 package che.swgc.client.renderer.entity;
 
 import che.swgc.client.model.item.EwokSpearModel;
+import che.swgc.client.render.SwgcEntityRenderState;
 import che.swgc.entity.EwokSpear;
-import javax.annotation.ParametersAreNonnullByDefault;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.VertexConsumer;
-import che.swgc.client.compat.render.MultiBufferSource;
-import net.minecraft.client.renderer.OverlayTexture;
-import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.core.RotationAxis;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.item.ItemRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.util.Unit;
 
-@javax.annotation.ParametersAreNonnullByDefault
-public class EwokSpearRenderer extends net.minecraft.client.renderer.entity.EntityRenderer<EwokSpear> {
-   public static final net.minecraft.resources.Identifier TEXTURE = Identifier.fromNamespaceAndPath("swgc", "textures/entity/ewok_spear.png");
+public class EwokSpearRenderer extends EntityRenderer<EwokSpear, SwgcEntityRenderState> {
+   public static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("swgc", "textures/entity/ewok_spear.png");
    private final EwokSpearModel model;
 
-   public EwokSpearRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider.Context ctx) {
+   public EwokSpearRenderer(EntityRendererProvider.Context ctx) {
       super(ctx);
-      this.model = new EwokSpearModel(ctx.getPart(EwokSpearModel.LAYER_LOCATION));
+      this.model = new EwokSpearModel(ctx.bakeLayer(EwokSpearModel.LAYER_LOCATION));
    }
 
-   public void render(EwokSpear spear, float entityYaw, float partialTick, com.mojang.blaze3d.vertex.PoseStack poseStack, che.swgc.client.compat.render.MultiBufferSource src, int packedLight) {
-      poseStack.push();
-      poseStack.multiply(net.minecraft.core.RotationAxis.POSITIVE_Y.rotationDegrees(net.minecraft.util.Mth.lerp(partialTick, spear.prevYaw, spear.getYRot()) + 180.0F));
-      poseStack.multiply(net.minecraft.core.RotationAxis.POSITIVE_X.rotationDegrees(net.minecraft.util.Mth.lerp(partialTick, spear.prevPitch, spear.getXRot()) + 90.0F));
-      net.minecraft.client.renderer.VertexConsumer buffer = net.minecraft.client.renderer.item.ItemRenderer.getDirectItemGlintConsumer(src, this.model.getLayer(this.textureLocation(spear)), false, spear.isFoil());
-      this.model.render(poseStack, buffer, packedLight, net.minecraft.client.renderer.OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-      poseStack.pop();
-      super.render(spear, entityYaw, partialTick, poseStack, src, packedLight);
+   @Override
+   public SwgcEntityRenderState createRenderState() {
+      return new SwgcEntityRenderState();
    }
 
-   public net.minecraft.resources.Identifier textureLocation(EwokSpear ewokSpear) {
-      return TEXTURE;
+   @Override
+   public void extractRenderState(EwokSpear entity, SwgcEntityRenderState state, float partialTick) {
+      super.extractRenderState(entity, state, partialTick);
+      state.entity = entity;
+   }
+
+   @Override
+   public void submit(SwgcEntityRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+      EwokSpear spear = (EwokSpear)state.entity;
+      if (spear == null) {
+         super.submit(state, poseStack, submitNodeCollector, camera);
+         return;
+      }
+
+      float partialTick = state.ageInTicks % 1.0F;
+      poseStack.pushPose();
+      poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, spear.yRotO, spear.getYRot()) + 180.0F));
+      poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTick, spear.xRotO, spear.getXRot()) + 90.0F));
+      submitNodeCollector.submitModel(
+         this.model,
+         Unit.INSTANCE,
+         poseStack,
+         RenderTypes.entityCutout(TEXTURE),
+         state.lightCoords,
+         OverlayTexture.NO_OVERLAY,
+         -1,
+         null,
+         state.outlineColor,
+         null
+      );
+      poseStack.popPose();
+      super.submit(state, poseStack, submitNodeCollector, camera);
    }
 }

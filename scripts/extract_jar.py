@@ -1,39 +1,75 @@
-import zipfile
+import argparse
 import shutil
+import zipfile
 from pathlib import Path
 
-root = Path(r"C:\Users\kevin\Projekt\StarWarsMC-Port")
-jar = root / "libs" / "swgc-fabric-1.20.1-1.0.1.1.jar"
-extract_dir = root / "extracted"
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_JAR = ROOT / "libs" / "swgc-fabric-1.20.1-1.0.1.1.jar"
+COMMON_RES = ROOT / "common" / "src" / "main" / "resources"
 
-if extract_dir.exists():
-    shutil.rmtree(extract_dir)
-extract_dir.mkdir(parents=True)
 
-with zipfile.ZipFile(jar, "r") as zf:
-    zf.extractall(extract_dir)
+def parse_args():
+    parser = argparse.ArgumentParser(description="Extract SWGC JAR and restore binary assets.")
+    parser.add_argument("--jar", type=Path, default=DEFAULT_JAR, help="Path to source JAR")
+    parser.add_argument("--root", type=Path, default=ROOT, help="Worktree root")
+    return parser.parse_args()
 
-classes = list(extract_dir.rglob("*.class"))
-pngs = list(extract_dir.rglob("*.png"))
-oggs = list(extract_dir.rglob("*.ogg"))
-print(f"Extracted to {extract_dir}")
-print(f"Total files: {sum(1 for _ in extract_dir.rglob('*') if _.is_file())}")
-print(f"Class files: {len(classes)}")
-print(f"PNG files: {len(pngs)}")
-print(f"OGG files: {len(oggs)}")
 
-# Copy assets to workspace root (replace incomplete extraction)
-for subdir in ["assets", "data", "META-INF"]:
-    src = extract_dir / subdir
-    if src.exists():
-        dst = root / subdir
-        if dst.exists():
-            shutil.rmtree(dst)
-        shutil.copytree(src, dst)
+def copy_tree(src: Path, dst: Path):
+    if dst.exists():
+        shutil.rmtree(dst)
+    shutil.copytree(src, dst)
 
-for fname in ["fabric.mod.json", "pack.mcmeta", "swgc.refmap.json", "swgc.mixins.json", "swgc.fabric.mixins.json"]:
-    src = extract_dir / fname
-    if src.exists():
-        shutil.copy2(src, root / fname)
 
-print("Assets copied to workspace root")
+def main():
+    args = parse_args()
+    root = args.root
+    jar = args.jar
+    extract_dir = root / "extracted"
+
+    if not jar.is_file():
+        raise SystemExit(f"JAR not found: {jar}")
+
+    if extract_dir.exists():
+        shutil.rmtree(extract_dir)
+    extract_dir.mkdir(parents=True)
+
+    with zipfile.ZipFile(jar, "r") as zf:
+        zf.extractall(extract_dir)
+
+    classes = list(extract_dir.rglob("*.class"))
+    pngs = list(extract_dir.rglob("*.png"))
+    oggs = list(extract_dir.rglob("*.ogg"))
+    nbts = list(extract_dir.rglob("*.nbt"))
+    print(f"Extracted to {extract_dir}")
+    print(f"Total files: {sum(1 for _ in extract_dir.rglob('*') if _.is_file())}")
+    print(f"Class files: {len(classes)}")
+    print(f"PNG files: {len(pngs)}")
+    print(f"OGG files: {len(oggs)}")
+    print(f"NBT files: {len(nbts)}")
+
+    COMMON_RES.mkdir(parents=True, exist_ok=True)
+
+    for subdir in ["assets", "data"]:
+        src = extract_dir / subdir
+        if src.exists():
+            copy_tree(src, COMMON_RES / subdir)
+
+    meta_src = extract_dir / "META-INF"
+    if meta_src.exists():
+        copy_tree(meta_src, root / "META-INF")
+
+    for fname in ["fabric.mod.json", "pack.mcmeta", "swgc.refmap.json", "swgc.mixins.json", "swgc.fabric.mixins.json"]:
+        src = extract_dir / fname
+        if src.exists():
+            shutil.copy2(src, root / fname)
+
+    pack_mcmeta = extract_dir / "pack.mcmeta"
+    if pack_mcmeta.exists():
+        shutil.copy2(pack_mcmeta, COMMON_RES / "pack.mcmeta")
+
+    print(f"Assets copied to {COMMON_RES}")
+
+
+if __name__ == "__main__":
+    main()

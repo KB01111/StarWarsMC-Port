@@ -20,4 +20,8 @@ public abstract class SinglePartEntityModel<S extends SwgcMobRenderState> extend
    protected void updateAnimation(AnimationState state, Animation animation, float ageInTicks) {
       animation.apply(this.root, state, ageInTicks);
    }
+
+   protected void updateAnimation(AnimationState state, Animation animation, float ageInTicks, float speed) {
+      animation.apply(this.root, state, ageInTicks);
+   }
 }

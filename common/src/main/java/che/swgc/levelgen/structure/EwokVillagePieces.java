@@ -324,9 +324,9 @@ public class EwokVillagePieces {
          BlockPos fencePos = pos.relative(direction);
 
          lv.setBlock(fencePos, lv.getBlockState(fencePos).setValue(switch (direction) {
-            case NORTH -> CrossCollisionBlock.SOUTH;
-            case EAST -> CrossCollisionBlock.WEST;
-            case WEST -> CrossCollisionBlock.EAST;
+            case net.minecraft.core.Direction.NORTH -> CrossCollisionBlock.SOUTH;
+            case net.minecraft.core.Direction.EAST -> CrossCollisionBlock.WEST;
+            case net.minecraft.core.Direction.WEST -> CrossCollisionBlock.EAST;
             default -> CrossCollisionBlock.NORTH;
          }, true), 2);
       }

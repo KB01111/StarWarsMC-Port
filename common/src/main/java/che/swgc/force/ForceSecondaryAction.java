@@ -15,7 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
-import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -81,7 +80,7 @@ public enum ForceSecondaryAction implements ForceAction {
 
          return switch (hitResult.getType()) {
             case BLOCK -> {
-               net.minecraft.core.BlockPos pos = ((net.minecraft.world.phys.BlockHitResult)hitResult).getBlockPos();
+               net.minecraft.core.BlockPos pos = ((net.minecraft.world.phys.BlockHitResult)hitResult).blockPosition();
                yield (float)((ForcePossessor)player).swgc$getForceSkill() >= player.level().getBlockState(pos).getDestroySpeed(player.level(), pos) * 8.0F
                   ? new int[]{pos.getX(), pos.getY(), pos.getZ()}
                   : null;
@@ -128,7 +127,7 @@ public enum ForceSecondaryAction implements ForceAction {
             return new int[0];
          } else {
             player.sendSystemMessage(
-               net.minecraft.network.chat.Component.translatable("force.swgc.jump.notOnGround", new Object[]{net.minecraft.client.Minecraft.getInstance().options.keyUse.getTranslatedKeyMessage()})
+               net.minecraft.network.chat.Component.translatable("force.swgc.jump.notOnGround", net.minecraft.network.chat.Component.keybind("key.use"))
             );
             return null;
          }
@@ -232,10 +231,6 @@ public enum ForceSecondaryAction implements ForceAction {
 
    public boolean unlocked(net.minecraft.world.entity.player.Player player) {
       return ((ForcePossessor)player).swgc$getForceSkill() >= this.requiredSkill && ((ForcePossessor)player).swgc$getForceDarkSide() >= this.requiredDarkSide;
-   }
-
-   public boolean getInput() {
-      return this.lmb && net.minecraft.client.Minecraft.getInstance().options.keyAttack.isDown() || this.rmb && net.minecraft.client.Minecraft.getInstance().options.keyUse.isDown();
    }
 
    public static ForceSecondaryAction[] getAllUnlocked(net.minecraft.world.entity.player.Player player) {

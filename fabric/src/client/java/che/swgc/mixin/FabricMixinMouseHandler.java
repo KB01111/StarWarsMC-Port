@@ -1,14 +1,14 @@
 package che.swgc.mixin;
 
 import che.swgc.client.SwgcHooksClient;
-import net.minecraft.client.Mouse;
+import net.minecraft.client.MouseHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin({net.minecraft.client.Mouse.class})
+@Mixin({net.minecraft.client.MouseHandler.class})
 public class FabricMixinMouseHandler {
    public FabricMixinMouseHandler() {
    }

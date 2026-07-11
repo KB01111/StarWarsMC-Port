@@ -33,7 +33,6 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.Identifier;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.CreativeModeTab.Builder;
@@ -297,14 +296,16 @@ public class SwgcItems {
                   (params, output) -> {
                      SPAWN_EGGS.forEach(supplier -> {
                         net.minecraft.world.item.ItemStack stack = supplier.get().getDefaultInstance();
-                        SwgcItemData.update(stack, tag -> tag.putString("Owner", Objects.requireNonNull(Minecraft.getInstance().player).getUUID().toString()));
+                        Services.CLIENT.getLocalPlayerUuid()
+                           .ifPresent(uuid -> SwgcItemData.update(stack, tag -> tag.putString("Owner", uuid.toString())));
                         output.accept(stack);
                      });
                      CustomArmorItem.cloneSets()
                         .forEach(
                            (material, armor) -> {
                               net.minecraft.world.item.ItemStack stack = CLONE.get().getDefaultInstance();
-                              SwgcItemData.update(stack, tag -> tag.putString("Owner", Objects.requireNonNull(Minecraft.getInstance().player).getUUID().toString()));
+                              Services.CLIENT.getLocalPlayerUuid()
+                                 .ifPresent(uuid -> SwgcItemData.update(stack, tag -> tag.putString("Owner", uuid.toString())));
                               output.accept(
                                  Clone.addSpawnEggData(
                                     stack,

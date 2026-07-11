@@ -9,10 +9,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.Identifier;
 import net.minecraft.client.model.Model;
 import com.mojang.blaze3d.vertex.PoseStack;
-import che.swgc.client.compat.render.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.util.Unit;
 
 public class SimpleItemRenderer<T extends net.minecraft.client.model.Model> implements ItemRenderer {
    private final T model;
@@ -28,12 +29,12 @@ public class SimpleItemRenderer<T extends net.minecraft.client.model.Model> impl
    }
 
    @Override
-   public void render(net.minecraft.world.item.ItemStack itemStack, net.minecraft.world.item.ItemDisplayContext ctx, com.mojang.blaze3d.vertex.PoseStack poseStack, che.swgc.client.compat.render.MultiBufferSource src, float partialTick, int packedLight, int packedOverlay) {
-      poseStack.push();
+   public void render(net.minecraft.world.item.ItemStack itemStack, net.minecraft.world.item.ItemDisplayContext ctx, com.mojang.blaze3d.vertex.PoseStack poseStack, net.minecraft.client.renderer.SubmitNodeCollector src, float partialTick, int packedLight, int packedOverlay) {
+      poseStack.pushPose();
       poseStack.scale(-1.0F, -1.0F, 1.0F);
       poseStack.translate(-0.5F, -1.501F, 0.5F);
-      this.model.render(poseStack, src.getBuffer(this.model.getLayer(this.texture)), packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-      poseStack.pop();
+      src.submitModel(this.model, Unit.INSTANCE, poseStack, this.texture, packedLight, packedOverlay, 0, null);
+      poseStack.popPose();
    }
 
    public static SimpleItemRenderer<BlasterModel> blaster(net.minecraft.client.model.geom.EntityModelSet models, String modelName) {

@@ -11,15 +11,14 @@ import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 
 @javax.annotation.ParametersAreNonnullByDefault
-public class RoyalGuardianRenderer extends che.swgc.client.render.SwgcMobRenderer<RoyalGuardian, RoyalGuardianModel<RoyalGuardian>> {
+public class RoyalGuardianRenderer extends che.swgc.client.render.SwgcMobRenderer<RoyalGuardian, RoyalGuardianModel> {
    public static final net.minecraft.resources.Identifier TEXTURE = SwgcClientUtils.entityTex("royal_guardian");
 
    public RoyalGuardianRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider.Context ctx) {
-      super(ctx, new RoyalGuardianModel(ctx.getPart(RoyalGuardianModel.LAYER_LOCATION)), 0.5F);
-      this.addFeature(new net.minecraft.client.renderer.entity.layers.ItemInHandLayer(this, ctx.getHeldItemRenderer()));
+      super(ctx, new RoyalGuardianModel(ctx.bakeLayer(RoyalGuardianModel.LAYER_LOCATION)), 0.5F);
    }
 
-   public net.minecraft.resources.Identifier textureLocation(RoyalGuardian royalGuardian) {
+   public net.minecraft.resources.Identifier getTextureLocation(che.swgc.client.render.SwgcMobRenderState state) {
       return TEXTURE;
    }
 }

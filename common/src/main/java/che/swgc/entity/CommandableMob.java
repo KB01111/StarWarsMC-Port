@@ -2,9 +2,8 @@ package che.swgc.entity;
 
 import che.swgc.SwgcItemData;
 
-import che.swgc.client.SwgcClientUtils;
-import che.swgc.force.StarWarsWeaponWielder;
 import che.swgc.platform.Services;
+import che.swgc.force.StarWarsWeaponWielder;
 import com.mojang.authlib.GameProfile;
 import java.util.EnumSet;
 import java.util.Objects;
@@ -38,13 +37,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.scores.Team;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.players.ProfileResolver;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -55,7 +52,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.ai.goal.Goal.Flag;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
@@ -83,7 +79,7 @@ public class CommandableMob extends net.minecraft.world.entity.PathfinderMob imp
 
    protected net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
       if (player.isLocalPlayer() && player.getUUID().equals(this.getOwnerUuid())) {
-         SwgcClientUtils.openDroidScreen(this);
+         Services.CLIENT.openDroidScreen(this);
          return net.minecraft.world.InteractionResult.CONSUME;
       } else {
          return net.minecraft.world.InteractionResult.PASS;
@@ -241,7 +237,11 @@ public class CommandableMob extends net.minecraft.world.entity.PathfinderMob imp
    }
 
    public CommandableMob.Command getCommand() {
-      return CommandableMob.Command.valueOf(this.entityData.get(DATA_COMMAND_ID));
+      try {
+         return CommandableMob.Command.valueOf(this.entityData.get(DATA_COMMAND_ID));
+      } catch (IllegalArgumentException ignored) {
+         return CommandableMob.Command.STAND_STILL;
+      }
    }
 
    public void command(CommandableMob.Command command) {

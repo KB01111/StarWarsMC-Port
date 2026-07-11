@@ -19,18 +19,7 @@ loom {
     }
 }
 
-// Custom renderers/models need a full 26.2 render-state port; exclude until ported.
-sourceSets.client.java {
-    exclude '**/client/renderer/**'
-    exclude '**/client/model/**'
-    exclude '**/client/animation/**'
-    exclude '**/client/render/**'
-    exclude '**/client/compat/**'
-    exclude '**/client/sound/**'
-    exclude '**/client/gui/DroidCommandScreen.java'
-    exclude '**/client/SwgcClientUtils.java'
-    exclude '**/mixin/**'
-}
+// Phase 2: all client packages enabled for 26.2 render-state port.
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
@@ -55,12 +44,12 @@ processResources {
 
 java {
     withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.release = 21
+    options.release = 25
 }
 
 jar {

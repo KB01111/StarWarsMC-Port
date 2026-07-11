@@ -5,7 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.client.Minecraft;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.RotationAxis;
+import com.mojang.math.Axis;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,9 +24,9 @@ public class FabricMixinGameRenderer {
       )}
    )
    void setRoll(float partialTicks, long finishTimeNano, com.mojang.blaze3d.vertex.PoseStack poseStack, CallbackInfo ci) {
-      net.minecraft.world.entity.Entity entity = net.minecraft.client.Minecraft.getInstance().cameraEntity;
+      net.minecraft.world.entity.Entity entity = net.minecraft.client.Minecraft.getInstance().getCameraEntity();
       if (entity != null && entity.getVehicle() instanceof StarFighter starFighter) {
-         poseStack.multiply(net.minecraft.core.RotationAxis.NEGATIVE_Z.rotationDegrees(starFighter.getZRot(partialTicks)));
+         poseStack.mulPose(com.mojang.math.Axis.ZN.rotationDegrees(starFighter.getZRot(partialTicks)));
       }
    }
 }

@@ -10,13 +10,13 @@ import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 
 @javax.annotation.ParametersAreNonnullByDefault
-public class EwokRenderer extends che.swgc.client.render.SwgcMobRenderer<Ewok, EwokModel<Ewok>> {
+public class EwokRenderer extends che.swgc.client.render.SwgcMobRenderer<Ewok, EwokModel> {
    public EwokRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider.Context ctx) {
-      super(ctx, new EwokModel(ctx.getPart(EwokModel.LAYER_LOCATION)), 0.2F);
-      this.addFeature(new net.minecraft.client.renderer.entity.layers.ItemInHandLayer(this, ctx.getHeldItemRenderer()));
+      super(ctx, new EwokModel(ctx.bakeLayer(EwokModel.LAYER_LOCATION)), 0.2F);
    }
 
-   public net.minecraft.resources.Identifier textureLocation(Ewok ewok) {
+   public net.minecraft.resources.Identifier getTextureLocation(che.swgc.client.render.SwgcMobRenderState state) {
+      che.swgc.entity.Ewok ewok = (che.swgc.entity.Ewok)state.entity;
       return Identifier.fromNamespaceAndPath("swgc", "textures/entity/ewok/" + ewok.getVariant().name().toLowerCase() + ".png");
    }
 }

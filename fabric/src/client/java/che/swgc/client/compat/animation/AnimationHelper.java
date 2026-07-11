@@ -1,6 +1,6 @@
 package che.swgc.client.compat.animation;
 
-import che.swgc.client.compat.animation.AnimationChannel;
+import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.Keyframe;
 import org.joml.Vector3f;
 
@@ -15,6 +15,10 @@ public final class AnimationHelper {
 
    public static Vector3f createScalaringVector(float x, float y, float z) {
       return new Vector3f(x, y, z);
+   }
+
+   public static Vector3f createScalingVector(double x, double y, double z) {
+      return createScalaringVector((float)x, (float)y, (float)z);
    }
 
    public static Keyframe keyframe(float timestamp, Vector3f target, AnimationChannel.Interpolation interpolation) {

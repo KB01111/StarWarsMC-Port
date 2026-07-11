@@ -2,6 +2,7 @@ package che.swgc.client;
 
 import che.swgc.force.ForcePossessor;
 import che.swgc.force.ForceSecondaryAction;
+import che.swgc.platform.Services;
 import che.swgc.force.LightsaberAttack;
 import che.swgc.item.BlasterItem;
 import che.swgc.item.CustomArmorItem;
@@ -38,7 +39,7 @@ public class SwgcHooksClient {
       if (player instanceof ForcePossessor forcePossessor
          && (
             forcePossessor.isLightsaberAttacking() && !Minecraft.getInstance().options.keyAttack.isDown()
-               || forcePossessor.isUsingForce() && !Objects.requireNonNull(forcePossessor.swgc$getForceSecondaryAction()).getInput()
+               || forcePossessor.isUsingForce() && !Services.CLIENT.isSecondaryActionInputDown(Objects.requireNonNull(forcePossessor.swgc$getForceSecondaryAction()))
          )) {
          forcePossessor.swgc$stopAllForceActions();
          SwgcNetworking.sendToServer(new SimpleSwgcActionPacket(1));

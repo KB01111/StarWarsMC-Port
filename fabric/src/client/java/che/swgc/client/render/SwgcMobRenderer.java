@@ -6,7 +6,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Mob;
 
-public abstract class SwgcMobRenderer<T extends Mob, M extends EntityModel<SwgcMobRenderState>> extends MobRenderer<T, SwgcMobRenderState, M> {
+public abstract class SwgcMobRenderer<T extends Mob, M extends EntityModel<? super SwgcMobRenderState>>
+   extends MobRenderer<T, SwgcMobRenderState, M> {
    protected SwgcMobRenderer(EntityRendererProvider.Context context, M model, float shadowRadius) {
       super(context, model, shadowRadius);
    }

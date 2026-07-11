@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.AnimationState;
 
@@ -19,6 +18,10 @@ public final class Animation {
       this.length = length;
    }
 
+   public static Animation fromDefinition(AnimationDefinition definition, float length) {
+      return new Animation(definition, length);
+   }
+
    public float comp_597() {
       return this.length;
    }
@@ -28,15 +31,15 @@ public final class Animation {
    }
 
    public void applyWalk(ModelPart root, float limbSwing, float limbSwingAmount, float speed, float scale) {
-      KeyframeAnimation.bake(root, this.definition).applyWalk(limbSwing, limbSwingAmount, speed, scale);
+      SwgcKeyframeAnimation.bake(root, this.definition).applyWalk(limbSwing, limbSwingAmount, speed, scale);
    }
 
    public void apply(ModelPart root, AnimationState state, float ageInTicks) {
-      KeyframeAnimation.bake(root, this.definition).apply(state, ageInTicks);
+      SwgcKeyframeAnimation.bake(root, this.definition).apply(state, ageInTicks);
    }
 
    public void applyStatic(ModelPart root) {
-      KeyframeAnimation.bake(root, this.definition).applyStatic();
+      SwgcKeyframeAnimation.bake(root, this.definition).applyStatic();
    }
 
    public static final class Builder {

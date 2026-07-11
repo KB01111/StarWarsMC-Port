@@ -278,7 +278,7 @@ public class ObeseWan extends net.minecraft.world.entity.PathfinderMob {
       }
 
       public void tick() {
-         net.minecraft.core.BlockPos pos = this.blockEntity.getBlockPos();
+         net.minecraft.core.BlockPos pos = this.blockEntity.blockPosition();
          if (Math.sqrt(ObeseWan.this.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos))) <= 4.0 + ObeseWan.this.getBoundingBox().getSize()) {
             if (ObeseWan.this.getNavigation().isInProgress()) {
                ObeseWan.this.getNavigation().stop();

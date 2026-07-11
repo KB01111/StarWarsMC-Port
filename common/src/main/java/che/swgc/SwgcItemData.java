@@ -1,5 +1,7 @@
 package che.swgc;
 
+import che.swgc.SwgcItemData;
+
 import java.util.function.Consumer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
