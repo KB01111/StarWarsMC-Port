@@ -1,0 +1,74 @@
+plugins {
+    id 'net.fabricmc.fabric-loom'
+    id 'maven-publish'
+}
+
+base {
+    archivesName = "${mod_id}-fabric-${minecraft_version}"
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+            sourceSet "main", project(":common")
+        }
+    }
+}
+
+// Custom renderers/models need a full 26.2 render-state port; exclude until ported.
+sourceSets.client.java {
+    exclude '**/client/renderer/**'
+    exclude '**/client/model/**'
+    exclude '**/client/animation/**'
+    exclude '**/client/render/**'
+    exclude '**/client/compat/**'
+    exclude '**/client/sound/**'
+    exclude '**/client/gui/DroidCommandScreen.java'
+    exclude '**/client/SwgcClientUtils.java'
+    exclude '**/mixin/**'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+
+    implementation project(':common')
+
+    compileOnly 'org.jetbrains:annotations:24.1.0'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mod_id", mod_id
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version, "mod_id": mod_id
+    }
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+    from(project(":common").sourceSets.main.output) {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+    dependsOn project(":common").tasks.jar
+}

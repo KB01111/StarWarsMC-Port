@@ -1,0 +1,4 @@
+{
+  "parent": "swgc:item/entity_model_helmet",
+  "textures": { "particle": "block/iron_block" }
+}

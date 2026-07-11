@@ -1,0 +1,250 @@
+{
+    "entity.atrt.step": {
+        "subtitles": "subtitles.swgc.entity.atrt.step",
+        "sounds": [ "swgc:entity/atrt/step" ]
+    },
+    "entity.droid.roger_en": {
+        "subtitles": "subtitles.swgc.entity.droid.roger_roger",
+        "sounds": [ "swgc:entity/droid/roger_en" ]
+    },
+    "entity.droid.roger_ru": {
+        "subtitles": "subtitles.swgc.entity.droid.roger_roger",
+        "sounds": [ "swgc:entity/droid/roger_ru" ]
+    },
+    "entity.ewok.ambient": {
+        "subtitles": "subtitles.swgc.entity.ewok.ambient",
+        "sounds": [
+            "swgc:entity/ewok/ambient1",
+            "swgc:entity/ewok/ambient2",
+            "swgc:entity/ewok/ambient3",
+            "swgc:entity/ewok/ambient4",
+            "swgc:entity/ewok/ambient5",
+            "swgc:entity/ewok/ambient6",
+            "swgc:entity/ewok/ambient7"
+        ]
+    },
+    "entity.ewok.hunt": {
+        "subtitles": "subtitles.swgc.entity.ewok.hunt",
+        "sounds": [
+            "swgc:entity/ewok/hunt1",
+            "swgc:entity/ewok/hunt2",
+            "swgc:entity/ewok/hunt3",
+            "swgc:entity/ewok/hunt4"
+        ]
+    },
+    "entity.ewok.hurt": {
+        "subtitles": "subtitles.swgc.entity.ewok.hurt",
+        "sounds": [
+            "swgc:entity/ewok/hurt1",
+            "swgc:entity/ewok/hurt2",
+            "swgc:entity/ewok/hurt3"
+        ]
+    },
+    "entity.starfighter.engine": {
+        "subtitles": "subtitles.swgc.entity.starfighter.engine",
+        "sounds": [ "swgc:entity/starfighter/engine" ]
+    },
+    "item.blaster.shoot": {
+        "subtitles": "subtitles.swgc.item.blaster.shoot",
+        "sounds": [ "swgc:item/lightsaber/blaster5" ]
+    },
+    "item.lightsaber.hum": {
+        "subtitles": "subtitles.swgc.item.lightsaber.hum",
+        "sounds": [
+            "swgc:item/lightsaber/hum1"
+        ]
+    }, 
+    "item.lightsaber.in": {
+        "subtitles": "subtitles.swgc.item.lightsaber.in",
+        "sounds": [
+            "swgc:item/lightsaber/in1",
+            "swgc:item/lightsaber/in2"
+        ]
+    }, 
+    "item.lightsaber.endmelt": {
+        "subtitles": "subtitles.swgc.item.lightsaber.endmelt",
+        "sounds": [
+            "swgc:item/lightsaber/endmelt1"
+        ]
+    }, 
+    "item.lightsaber.clash": {
+        "subtitles": "subtitles.swgc.item.lightsaber.clash",
+        "sounds": [
+            "swgc:item/lightsaber/clash1",
+            "swgc:item/lightsaber/clash2",
+            "swgc:item/lightsaber/clash3",
+            "swgc:item/lightsaber/clash4",
+            "swgc:item/lightsaber/clash5",
+            "swgc:item/lightsaber/clash6",
+            "swgc:item/lightsaber/clash7",
+            "swgc:item/lightsaber/clash8",
+            "swgc:item/lightsaber/clash9",
+            "swgc:item/lightsaber/clash10",
+            "swgc:item/lightsaber/clash11",
+            "swgc:item/lightsaber/clash12",
+            "swgc:item/lightsaber/clash13",
+            "swgc:item/lightsaber/clash14",
+            "swgc:item/lightsaber/clash15",
+            "swgc:item/lightsaber/clash16"
+        ]
+    }, 
+    "item.lightsaber.begindrag": {
+        "subtitles": "subtitles.swgc.item.lightsaber.begindrag",
+        "sounds": [
+            "swgc:item/lightsaber/begindrag1"
+        ]
+    }, 
+    "item.lightsaber.beginlock": {
+        "subtitles": "subtitles.swgc.item.lightsaber.beginlock",
+        "sounds": [
+            "swgc:item/lightsaber/beginlock1"
+        ]
+    }, 
+    "item.lightsaber.out": {
+        "subtitles": "subtitles.swgc.item.lightsaber.out",
+        "sounds": [
+            "swgc:item/lightsaber/out1",
+            "swgc:item/lightsaber/out2",
+            "swgc:item/lightsaber/out3",
+            "swgc:item/lightsaber/out4"
+        ]
+    }, 
+    "item.lightsaber.beginmelt": {
+        "subtitles": "subtitles.swgc.item.lightsaber.beginmelt",
+        "sounds": [
+            "swgc:item/lightsaber/beginmelt1"
+        ]
+    }, 
+    "item.lightsaber.swing": {
+        "subtitles": "subtitles.swgc.item.lightsaber.swing",
+        "sounds": [
+            "swgc:item/lightsaber/swing1",
+            "swgc:item/lightsaber/swing2",
+            "swgc:item/lightsaber/swing3",
+            "swgc:item/lightsaber/swing4",
+            "swgc:item/lightsaber/swing5",
+            "swgc:item/lightsaber/swing6",
+            "swgc:item/lightsaber/swing11",
+            "swgc:item/lightsaber/swing13",
+            "swgc:item/lightsaber/swing15",
+            "swgc:item/lightsaber/swing16"
+        ]
+    }, 
+    "item.lightsaber.melt": {
+        "subtitles": "subtitles.swgc.item.lightsaber.melt",
+        "sounds": [
+            "swgc:item/lightsaber/melt1"
+        ]
+    }, 
+    "item.lightsaber.stab": {
+        "subtitles": "subtitles.swgc.item.lightsaber.stab",
+        "sounds": [
+            "swgc:item/lightsaber/stab1",
+            "swgc:item/lightsaber/stab2",
+            "swgc:item/lightsaber/stab3",
+            "swgc:item/lightsaber/stab4",
+            "swgc:item/lightsaber/stab5",
+            "swgc:item/lightsaber/stab6",
+            "swgc:item/lightsaber/stab7",
+            "swgc:item/lightsaber/stab8"
+        ]
+    }, 
+    "item.lightsaber.enddrag": {
+        "subtitles": "subtitles.swgc.item.lightsaber.enddrag",
+        "sounds": [
+            "swgc:item/lightsaber/enddrag1"
+        ]
+    }, 
+    "item.lightsaber.spin": {
+        "subtitles": "subtitles.swgc.item.lightsaber.spin",
+        "sounds": [
+            "swgc:item/lightsaber/spin1",
+            "swgc:item/lightsaber/spin2",
+            "swgc:item/lightsaber/spin3",
+            "swgc:item/lightsaber/spin4"
+        ]
+    }, 
+    "item.lightsaber.endlock": {
+        "subtitles": "subtitles.swgc.item.lightsaber.endlock",
+        "sounds": [
+            "swgc:item/lightsaber/endlock1",
+            "swgc:item/lightsaber/endlock2"
+        ]
+    }, 
+    "item.lightsaber.lock": {
+        "subtitles": "subtitles.swgc.item.lightsaber.lock",
+        "sounds": [
+            "swgc:item/lightsaber/lock1"
+        ]
+    }, 
+    "item.lightsaber.force": {
+        "subtitles": "subtitles.swgc.item.lightsaber.force",
+        "sounds": [
+            "swgc:item/lightsaber/force1",
+            "swgc:item/lightsaber/force2"
+        ]
+    }, 
+    "item.lightsaber.drag": {
+        "subtitles": "subtitles.swgc.item.lightsaber.drag",
+        "sounds": [
+            "swgc:item/lightsaber/drag1"
+        ]
+    }, 
+    "item.lightsaber.blaster": {
+        "subtitles": "subtitles.swgc.item.lightsaber.blaster",
+        "sounds": [
+            "swgc:item/lightsaber/blaster1",
+            "swgc:item/lightsaber/blaster2",
+            "swgc:item/lightsaber/blaster3",
+            "swgc:item/lightsaber/blaster4",
+            "swgc:item/lightsaber/blaster5"
+        ]
+    }, 
+    "item.lightsaber.font": {
+        "subtitles": "subtitles.swgc.item.lightsaber.font",
+        "sounds": [
+            "swgc:item/lightsaber/font1"
+        ]
+    },
+    "item.obeewan.hum": {
+        "subtitles": "subtitles.swgc.item.obeewan.hum",
+        "sounds": [
+            "swgc:item/obeewan/hum"
+        ]
+    }, 
+    "item.obeewan.in": {
+        "subtitles": "subtitles.swgc.item.obeewan.in",
+        "sounds": [
+            "swgc:item/obeewan/in1",
+            "swgc:item/obeewan/in2"
+        ]
+    }, 
+    "item.obeewan.clash": {
+        "subtitles": "subtitles.swgc.item.obeewan.clash",
+        "sounds": [
+            "swgc:item/obeewan/clash1",
+            "swgc:item/obeewan/clash2",
+            "swgc:item/obeewan/clash3",
+            "swgc:item/obeewan/clash4",
+            "swgc:item/obeewan/clash5",
+            "swgc:item/obeewan/clash6"
+        ]
+    }, 
+    "item.obeewan.out": {
+        "subtitles": "subtitles.swgc.item.obeewan.out",
+        "sounds": [
+            "swgc:item/obeewan/out1",
+            "swgc:item/obeewan/out2",
+            "swgc:item/obeewan/out3"
+        ]
+    }, 
+    "item.obeewan.swing": {
+        "subtitles": "subtitles.swgc.item.obeewan.swing",
+        "sounds": [
+            "swgc:item/obeewan/swing1",
+            "swgc:item/obeewan/swing2",
+            "swgc:item/obeewan/swing3",
+            "swgc:item/obeewan/swing4"
+        ]
+    }
+}

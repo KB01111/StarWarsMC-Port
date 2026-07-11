@@ -1,0 +1,22 @@
+{
+  "parent": "swgc:item/entity_model_chestplate",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        -135,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "translation": [
+        0,
+        1,
+        0
+      ]
+    }
+  }
+}

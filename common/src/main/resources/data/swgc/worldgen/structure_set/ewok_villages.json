@@ -1,0 +1,16 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "frequency": 0.05,
+    "locate_offset": [ 9, 0, 9 ],
+    "salt": 116946185,
+    "separation": 4,
+    "spacing": 8
+  },
+  "structures": [
+    {
+      "structure": "swgc:ewok_village",
+      "weight": 1
+    }
+  ]
+}

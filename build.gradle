@@ -1,0 +1,11 @@
+allprojects {
+    group = 'che.swgc'
+    version = project.mod_version
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://maven.fabricmc.net/' }
+    }
+}

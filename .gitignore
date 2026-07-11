@@ -1,0 +1,31 @@
+﻿# Gradle
+.gradle/
+build/
+out/
+
+# IDE / editor
+.idea/
+*.iml
+.vscode/
+.cursor/
+
+# Compile diagnostics and local logs
+*.log
+build-errors.txt
+compile-*.txt
+compile-out*.txt
+fabric-client-compile*.log
+fabric-compile*.txt
+
+# Port tooling intermediates
+decompiled/
+remapped/
+extracted/
+
+# OS
+Thumbs.db
+.DS_Store
+
+__pycache__/
+*.pyc
+

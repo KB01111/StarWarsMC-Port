@@ -1,0 +1,17 @@
+{ "variants": {
+  "facing=north": {
+    "model": "swgc:block/gas_harvester",
+    "y": 180
+  },
+  "facing=east": {
+    "model": "swgc:block/gas_harvester",
+    "y": -90
+  },
+  "facing=south": {
+    "model": "swgc:block/gas_harvester"
+  },
+  "facing=west": {
+    "model": "swgc:block/gas_harvester",
+    "y": 90
+  }
+} }

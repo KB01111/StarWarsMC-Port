@@ -1,0 +1,52 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:survives_explosion"
+            }
+          ],
+          "name": "swgc:gas_harvester"
+        },
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "swgc:gas_harvester",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "vessel_state": "filled"
+                  }
+                }
+              ],
+              "name": "swgc:tibanna_vessel"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "swgc:gas_harvester",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "vessel_state": "empty"
+                  }
+                }
+              ],
+              "name": "swgc:empty_gas_vessel"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "swgc:blocks/gas_harvester"
+}
