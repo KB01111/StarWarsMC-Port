@@ -24,10 +24,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class FabricMixinItemInHandRenderer {
    @Shadow
    public abstract void renderItem(
-      net.minecraft.world.entity.LivingEntity entity,
-      ItemStack stack,
-      ItemDisplayContext displayContext,
-      boolean leftHanded,
+      net.minecraft.world.entity.LivingEntity mob,
+      ItemStack itemStack,
+      ItemDisplayContext type,
       PoseStack poseStack,
       SubmitNodeCollector submitNodeCollector,
       int lightCoords
@@ -87,7 +86,6 @@ public abstract class FabricMixinItemInHandRenderer {
             player,
             itemStack,
             right ? ItemDisplayContext.FIRST_PERSON_RIGHT_HAND : ItemDisplayContext.FIRST_PERSON_LEFT_HAND,
-            !right,
             poseStack,
             submitNodeCollector,
             lightCoords

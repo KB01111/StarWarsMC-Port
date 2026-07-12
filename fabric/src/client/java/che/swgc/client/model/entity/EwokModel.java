@@ -266,6 +266,14 @@ public class EwokModel extends che.swgc.client.compat.model.SinglePartEntityMode
       float headPitch = state.xRot;
 
       AbstractEwok entity = (AbstractEwok)state.entity;
+      if (entity == null) {
+         return;
+      }
+
+      float partialTick = state.ageInTicks % 1.0F;
+      this.mainArm = entity.getMainArm();
+      this.sprint = entity.getSprint(partialTick);
+
       this.root.getAllParts().forEach(net.minecraft.client.model.geom.ModelPart::resetPose);
       this.updateAnimation(entity.jumpAnimState, EwokAnimation.JUMP, ageInTicks);
       float f = 1.0F - (float)entity.jumpAnimState.getTimeInMillis(ageInTicks) / 250.0F;

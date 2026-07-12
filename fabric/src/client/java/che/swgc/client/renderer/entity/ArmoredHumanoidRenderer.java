@@ -39,7 +39,8 @@ public class ArmoredHumanoidRenderer<T extends Mob> extends che.swgc.client.rend
    }
 
    @Override
+   @Nullable
    public Identifier getTextureLocation(SwgcMobRenderState state) {
-      return Identifier.fromNamespaceAndPath("minecraft", "textures/entity/steve.png");
+      return null;
    }
 }

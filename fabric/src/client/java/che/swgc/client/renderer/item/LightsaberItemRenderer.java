@@ -62,8 +62,12 @@ public class LightsaberItemRenderer implements ItemRenderer {
       props.model.stack = stack;
       props.model.activation = anim;
       props.model.ctx = ctx;
+      boolean firstPerson = ctx == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND || ctx == ItemDisplayContext.FIRST_PERSON_LEFT_HAND;
+      ITEM_RENDER_STATE.entity = firstPerson || ctx == ItemDisplayContext.GUI ? Minecraft.getInstance().player : null;
+      ITEM_RENDER_STATE.ageInTicks = Minecraft.getInstance().level != null ? Minecraft.getInstance().level.getGameTime() + partialTick : partialTick;
+      props.model.setupAnim(ITEM_RENDER_STATE);
       Identifier baseTexture = props.getTexture(anim, false);
-      src.submitModel(props.model, ITEM_RENDER_STATE, poseStack, baseTexture, packedLight, packedOverlay, 0, null);
+      src.submitModel(props.model, ITEM_RENDER_STATE, poseStack, RenderTypes.entityCutout(baseTexture), packedLight, packedOverlay, 0, null);
       int color = LightsaberItem.getColor(stack);
       int color1 = props.getGlowing(anim, color);
       if (color1 != 0) {
@@ -92,7 +96,7 @@ public class LightsaberItemRenderer implements ItemRenderer {
          float rodScale = Math.max(poseStack.last().pose().m32() * -0.1F + 0.5F, 1.0F);
          this.bladeModel.rod.xScale = this.bladeModel.rod.zScale = rodScale;
          this.bladeModel.outlineThickness = 1.5F * rodScale;
-         src.submitModel(this.bladeModel, Unit.INSTANCE, poseStack, PlasmaRodModel.DEFAULT_TEXTURE, 15728640, packedOverlay, 0, null);
+         src.submitModel(this.bladeModel, Unit.INSTANCE, poseStack, RenderTypes.entityCutout(PlasmaRodModel.DEFAULT_TEXTURE), 15728640, packedOverlay, 0, null);
          src.submitModel(
             this.bladeModel,
             Unit.INSTANCE,

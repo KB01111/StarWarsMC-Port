@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(LivingEntityRenderer.class)
 public interface LivingEntityRendererInvoker {
    @Invoker("addLayer")
-   void invokeAddLayer(RenderLayer<?, ?> layer);
+   boolean invokeAddLayer(RenderLayer<?, ?> layer);
 }

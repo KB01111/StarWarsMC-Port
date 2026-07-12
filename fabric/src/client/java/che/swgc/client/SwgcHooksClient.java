@@ -1,5 +1,6 @@
 package che.swgc.client;
 
+import che.swgc.client.renderer.entity.RideableRenderer;
 import che.swgc.force.ForcePossessor;
 import che.swgc.force.ForceSecondaryAction;
 import che.swgc.platform.Services;
@@ -22,6 +23,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,6 +58,15 @@ public class SwgcHooksClient {
          item = entity.getItemBySlot(EquipmentSlot.LEGS).getItem();
          updatePartVisibility(item, 8, playerModel.rightLeg, playerModel.rightPants);
          updatePartVisibility(item, 10, playerModel.leftLeg, playerModel.leftPants);
+      }
+
+      Entity vehicle = entity.getVehicle();
+      if (vehicle != null) {
+         var renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(vehicle);
+         if (renderer instanceof RideableRenderer<?> rideableRenderer) {
+            rideableRenderer.translateToSeat(entity, vehicle, poseStack, partialTick);
+            return true;
+         }
       }
 
       return false;

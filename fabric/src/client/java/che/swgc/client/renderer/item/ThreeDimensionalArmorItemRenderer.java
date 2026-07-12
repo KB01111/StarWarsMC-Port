@@ -20,11 +20,14 @@ public class ThreeDimensionalArmorItemRenderer implements ItemRenderer {
    public ThreeDimensionalArmorItemRenderer(net.minecraft.client.model.geom.EntityModelSet entityModels, CustomArmorItem item) {
       net.minecraft.client.model.geom.ModelPart root = entityModels.bakeLayer(new net.minecraft.client.model.geom.ModelLayerLocation(item.layerId, item.layerName));
 
-      this.parts = (switch (item.getType()) {
-         case HELMET -> Set.of("head", "hat");
-         case CHESTPLATE -> Set.of("body", "right_arm", "left_arm");
-         default -> Set.of("right_leg", "left_leg");
-      }).stream().map(root::getChild).toArray(net.minecraft.client.model.geom.ModelPart[]::new);
+      this.parts = switch (item.getType()) {
+         case HELMET -> {
+            net.minecraft.client.model.geom.ModelPart head = root.getChild("head");
+            yield new net.minecraft.client.model.geom.ModelPart[]{head, head.getChild("hat")};
+         }
+         case CHESTPLATE -> Set.of("body", "right_arm", "left_arm").stream().map(root::getChild).toArray(net.minecraft.client.model.geom.ModelPart[]::new);
+         default -> Set.of("right_leg", "left_leg").stream().map(root::getChild).toArray(net.minecraft.client.model.geom.ModelPart[]::new);
+      };
    }
 
    @Override
@@ -50,8 +53,12 @@ public class ThreeDimensionalArmorItemRenderer implements ItemRenderer {
    }
 
    public static net.minecraft.client.renderer.rendertype.RenderType renderType(che.swgc.item.CustomArmorItem item) {
+      String materialName = CustomArmorItem.Materials.nameOf(item.getMaterial());
+      Identifier textureId = materialName != null
+         ? Identifier.parse(materialName)
+         : item.layerId;
       return RenderTypes.armorCutoutNoCull(
-         item.layerId.withPath(path -> "textures/models/armor/" + path + "_layer_" + (item.getType() == ArmorType.LEGGINGS ? "2" : "1") + ".png")
+         textureId.withPath(path -> "textures/models/armor/" + path + "_layer_" + (item.getType() == ArmorType.LEGGINGS ? "2" : "1") + ".png")
       );
    }
 }

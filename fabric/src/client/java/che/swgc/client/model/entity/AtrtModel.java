@@ -16,7 +16,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.geom.ModelPart;
 import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.CameraType;
 
 @javax.annotation.ParametersAreNonnullByDefault
 public class AtrtModel extends che.swgc.client.compat.model.SinglePartEntityModel<che.swgc.client.render.SwgcMobRenderState> implements RideableModel {
@@ -1107,6 +1107,15 @@ public class AtrtModel extends che.swgc.client.compat.model.SinglePartEntityMode
       float limbSwingAmount = state.walkAnimationSpeed;
       float ageInTicks = state.ageInTicks;
       che.swgc.entity.Walker t = (che.swgc.entity.Walker)state.entity;
+      if (t != null) {
+         float partialTick = state.ageInTicks % 1.0F;
+         this.sprint = t.getSprint(partialTick);
+         net.minecraft.client.player.LocalPlayer player = Minecraft.getInstance().player;
+         this.hideInFirstPerson.visible = player == null
+            || Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON
+            || !t.hasPassenger(player);
+      }
+
       this.getPart().getAllParts().forEach(net.minecraft.client.model.geom.ModelPart::resetPose);
       this.updateAnimation(t.shootAnimState, AtrtAnimation.SHOT, ageInTicks);
       this.animateMovement(AtrtAnimation.WALK, limbSwing, limbSwingAmount, 1.0F, 1.0F - this.sprint);

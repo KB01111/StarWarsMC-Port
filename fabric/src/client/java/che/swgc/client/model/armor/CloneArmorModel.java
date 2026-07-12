@@ -54,7 +54,7 @@ public class CloneArmorModel {
             .mirror(false),
          net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F)
       );
-      net.minecraft.client.model.geom.builders.PartDefinition hat = partdefinition.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
+      net.minecraft.client.model.geom.builders.PartDefinition hat = head.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
       net.minecraft.client.model.geom.builders.PartDefinition body = partdefinition.addOrReplaceChild(
          "body",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
@@ -217,7 +217,7 @@ public class CloneArmorModel {
          net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(44, 59).addBox(-0.5F, -0.5F, -0.5F, 1.0F, 1.0F, 1.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(-0.001F)),
          net.minecraft.client.model.geom.PartPose.offsetAndRotation(0.5F, -6.0F, 0.0F, 0.0F, 0.0F, -0.7854F)
       );
-      net.minecraft.client.model.geom.builders.PartDefinition hat = partdefinition.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
+      net.minecraft.client.model.geom.builders.PartDefinition hat = head.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
       net.minecraft.client.model.geom.builders.PartDefinition body = partdefinition.addOrReplaceChild(
          "body",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()

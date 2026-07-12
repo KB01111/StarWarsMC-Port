@@ -19,8 +19,8 @@ public class CommonModelLayers {
    public static net.minecraft.client.model.geom.builders.MeshDefinition emptyHumanoidMesh() {
       net.minecraft.client.model.geom.builders.MeshDefinition meshdefinition = new net.minecraft.client.model.geom.builders.MeshDefinition();
       net.minecraft.client.model.geom.builders.PartDefinition partdefinition = meshdefinition.getRoot();
-      partdefinition.addOrReplaceChild("head", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
-      partdefinition.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
+      net.minecraft.client.model.geom.builders.PartDefinition head = partdefinition.addOrReplaceChild("head", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
+      head.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
       partdefinition.addOrReplaceChild("body", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
       partdefinition.addOrReplaceChild("right_arm", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(-5.0F, 2.0F, 0.0F));
       partdefinition.addOrReplaceChild("left_arm", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(5.0F, 2.0F, 0.0F));

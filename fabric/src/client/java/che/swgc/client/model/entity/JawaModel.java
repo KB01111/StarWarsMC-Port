@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 public class JawaModel extends HumanoidModel<che.swgc.client.render.SwgcMobRenderState> {
    public static final net.minecraft.client.model.geom.ModelLayerLocation LAYER_LOCATION = new net.minecraft.client.model.geom.ModelLayerLocation(Identifier.fromNamespaceAndPath("swgc", "jawa"), "main");
-   private final ModelPart hat;
    private final ModelPart jacket;
    private final ModelPart rightSleeve;
    private final ModelPart leftSleeve;
@@ -27,7 +26,6 @@ public class JawaModel extends HumanoidModel<che.swgc.client.render.SwgcMobRende
 
    public JawaModel(net.minecraft.client.model.geom.ModelPart root) {
       super(root, RenderTypes::entityCutout);
-      this.hat = root.getChild("hat");
       this.jacket = root.getChild("jacket");
       this.rightSleeve = root.getChild("right_sleeve");
       this.leftSleeve = root.getChild("left_sleeve");
@@ -43,10 +41,10 @@ public class JawaModel extends HumanoidModel<che.swgc.client.render.SwgcMobRende
          net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(16, 10).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 4.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
          net.minecraft.client.model.geom.PartPose.offset(0.0F, 11.0F, 0.0F)
       );
-      net.minecraft.client.model.geom.builders.PartDefinition hat = partdefinition.addOrReplaceChild(
+      head.addOrReplaceChild(
          "hat",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(0, 0).addBox(-2.5F, -4.5F, -2.5F, 5.0F, 5.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
-         net.minecraft.client.model.geom.PartPose.offset(0.0F, 11.0F, 0.0F)
+         net.minecraft.client.model.geom.PartPose.ZERO
       );
       net.minecraft.client.model.geom.builders.PartDefinition ear = partdefinition.addOrReplaceChild("ear", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 24.0F, 0.0F));
       net.minecraft.client.model.geom.builders.PartDefinition body = partdefinition.addOrReplaceChild(

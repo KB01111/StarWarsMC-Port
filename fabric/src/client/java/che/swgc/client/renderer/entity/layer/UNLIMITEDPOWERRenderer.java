@@ -21,6 +21,8 @@ import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 
@@ -141,13 +143,11 @@ public class UNLIMITEDPOWERRenderer extends RenderLayer<AvatarRenderState, Playe
          && (target = entity.level().getEntity(Objects.requireNonNull(((ForcePossessor)entity).swgc$getForceSecondaryActionData())[0])) != null) {
 
          Vector3f pos = poseStack.last().pose().getTranslation(new Vector3f());
+         Vec3 casterOffset = getCasterRenderOffset(erd, entity, partialTick);
 
-         Vector3f vector3f = target.getPosition(partialTick)
-
-            .add(Vec3.ZERO)
-
+         Vector3f vector3f = target.position()
+            .add(casterOffset.x, casterOffset.y, casterOffset.z)
             .add(0.0, target.getBbHeight() * 0.5F, 0.0)
-
             .subtract(erd.camera.position())
 
             .yRot((erd.camera.yRot() + 180.0F) * (float)Math.PI / 180.0F)
@@ -159,13 +159,9 @@ public class UNLIMITEDPOWERRenderer extends RenderLayer<AvatarRenderState, Playe
             .sub(pos);
 
          Matrix4f matrix4f = new Matrix4f()
-
             .translate(pos)
-
-            .yRot((float)Mth.atan2(vector3f.x, vector3f.z))
-
-            .xRot((float)(Math.PI / 2) - (float)Math.atan2(vector3f.y, (double)Mth.sqrt(vector3f.x * vector3f.x + vector3f.z * vector3f.z)))
-
+            .rotateY((float)Mth.atan2(vector3f.x, vector3f.z))
+            .rotateX((float)(Math.PI / 2) - (float)Math.atan2(vector3f.y, (double)Mth.sqrt(vector3f.x * vector3f.x + vector3f.z * vector3f.z)))
             .scale(1.0F, vector3f.length() * 0.125F, 1.0F);
 
          src.submitCustomGeometry(poseStack, RenderTypes.lightning(), (pose, buffer) -> {
@@ -279,6 +275,21 @@ public class UNLIMITEDPOWERRenderer extends RenderLayer<AvatarRenderState, Playe
    }
 
 
+
+   private static Vec3 getCasterRenderOffset(EntityRenderDispatcher erd, Entity entity, float partialTick) {
+      EntityRenderer<?, ?> renderer = erd.getRenderer(entity);
+      if (renderer == null) {
+         return Vec3.ZERO;
+      }
+
+      return getRenderOffsetUnsafe(renderer, entity, partialTick);
+   }
+
+   @SuppressWarnings({"unchecked", "rawtypes"})
+   private static Vec3 getRenderOffsetUnsafe(EntityRenderer renderer, Entity entity, float partialTick) {
+      EntityRenderState state = renderer.createRenderState(entity, partialTick);
+      return renderer.getRenderOffset(state);
+   }
 
    private static void quad(
 

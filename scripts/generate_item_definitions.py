@@ -40,13 +40,13 @@ CLONE_ARMOR_PREFIXES = [
     "clone_coruscant_guard",
 ]
 OTHER_ARMOR_PREFIXES = [
-    "jedi_female",
-    "jedi_male",
-    "jedi_male_2",
-    "sith_female",
-    "sith_male",
-    "sith_male_2",
-    "royal_guard",
+    ("jedi_female", False),
+    ("jedi_male", False),
+    ("jedi_male_2", True),
+    ("sith_female", True),
+    ("sith_male", False),
+    ("sith_male_2", True),
+    ("royal_guard", True),
 ]
 
 
@@ -75,18 +75,55 @@ def write_item(item_id: str, base: str) -> None:
     path.write_text(json.dumps(special_item(item_id, base), indent=2) + "\n", encoding="utf-8")
 
 
+def model_item(item_id: str) -> dict:
+    return {
+        "model": {
+            "type": "minecraft:model",
+            "model": f"swgc:item/{item_id}",
+        }
+    }
+
+
+def write_model_item(item_id: str) -> None:
+    path = OUT / f"{item_id}.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(model_item(item_id), indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> None:
+    special_ids: set[str] = set()
+
     for item_id, base in BASE_BY_ITEM.items():
         write_item(item_id, base)
+        special_ids.add(item_id)
 
     for blaster in BLASTERS:
         write_item(blaster, f"swgc:item/{blaster}")
+        special_ids.add(blaster)
 
-    for prefix in CLONE_ARMOR_PREFIXES + OTHER_ARMOR_PREFIXES:
+    for prefix in CLONE_ARMOR_PREFIXES:
         for suffix in ARMOR_SUFFIXES:
             item_id = f"{prefix}_{suffix}"
             base = "swgc:item/entity_model_helmet" if suffix == "helmet" else f"swgc:item/{item_id}"
             write_item(item_id, base)
+            special_ids.add(item_id)
+
+    for prefix, include_helmet in OTHER_ARMOR_PREFIXES:
+        for suffix in ARMOR_SUFFIXES:
+            if suffix == "helmet" and not include_helmet:
+                continue
+            item_id = f"{prefix}_{suffix}"
+            base = "swgc:item/entity_model_helmet" if suffix == "helmet" else f"swgc:item/{item_id}"
+            write_item(item_id, base)
+            special_ids.add(item_id)
+
+    models_dir = ROOT / "common" / "src" / "main" / "resources" / "assets" / "swgc" / "models" / "item"
+    template_ids = {"entity_model_boots", "entity_model_chestplate", "entity_model_helmet", "entity_model_leggings"}
+    for model_path in sorted(models_dir.glob("*.json")):
+        item_id = model_path.stem
+        if item_id in special_ids or item_id in template_ids:
+            continue
+        write_model_item(item_id)
 
     print(f"Wrote item definitions under {OUT}")
 

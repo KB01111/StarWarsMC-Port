@@ -9,4 +9,5 @@ public class GasHarvesterRenderState extends BlockEntityRenderState {
    public GasHarvesterBlock.VesselState vesselState = GasHarvesterBlock.VesselState.ABSENT;
    public Direction facing = Direction.NORTH;
    public ItemStack vesselItem = ItemStack.EMPTY;
+   public float harvestProgress;
 }

@@ -7,7 +7,7 @@ import che.swgc.client.model.item.StaticItemModel;
 import che.swgc.client.renderer.entity.EwokSpearRenderer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.Identifier;
-import net.minecraft.client.model.Model;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -33,7 +33,7 @@ public class SimpleItemRenderer<T extends net.minecraft.client.model.Model> impl
       poseStack.pushPose();
       poseStack.scale(-1.0F, -1.0F, 1.0F);
       poseStack.translate(-0.5F, -1.501F, 0.5F);
-      src.submitModel(this.model, Unit.INSTANCE, poseStack, this.texture, packedLight, packedOverlay, 0, null);
+      src.submitModel(this.model, Unit.INSTANCE, poseStack, RenderTypes.entityCutout(this.texture), packedLight, packedOverlay, 0, null);
       poseStack.popPose();
    }
 

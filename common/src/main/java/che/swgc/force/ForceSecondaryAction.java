@@ -80,7 +80,7 @@ public enum ForceSecondaryAction implements ForceAction {
 
          return switch (hitResult.getType()) {
             case BLOCK -> {
-               net.minecraft.core.BlockPos pos = ((net.minecraft.world.phys.BlockHitResult)hitResult).blockPosition();
+               net.minecraft.core.BlockPos pos = ((net.minecraft.world.phys.BlockHitResult)hitResult).getBlockPos();
                yield (float)((ForcePossessor)player).swgc$getForceSkill() >= player.level().getBlockState(pos).getDestroySpeed(player.level(), pos) * 8.0F
                   ? new int[]{pos.getX(), pos.getY(), pos.getZ()}
                   : null;

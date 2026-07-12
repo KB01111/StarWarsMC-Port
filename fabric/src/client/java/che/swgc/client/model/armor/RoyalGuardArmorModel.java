@@ -29,7 +29,7 @@ public class RoyalGuardArmorModel {
             .addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
          net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F)
       );
-      net.minecraft.client.model.geom.builders.PartDefinition hat = partdefinition.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
+      net.minecraft.client.model.geom.builders.PartDefinition hat = head.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
       net.minecraft.client.model.geom.builders.PartDefinition body = partdefinition.addOrReplaceChild(
          "body",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()

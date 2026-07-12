@@ -52,6 +52,18 @@ public class BlasterBoltRenderer extends EntityRenderer<BlasterBolt, SwgcEntityR
       Identifier texture = PlasmaRodModel.DEFAULT_TEXTURE;
       submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, this.model.renderType(texture), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, null, state.outlineColor, null);
       submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, RenderTypes.beaconBeam(texture, false), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, null, state.outlineColor, null);
+      int color = entity.getColor();
+      this.model.setupAndRenderOutline(
+         poseStack,
+         submitNodeCollector,
+         RenderTypes.beaconBeam(texture, true),
+         state.lightCoords,
+         OverlayTexture.NO_OVERLAY,
+         (float)ARGB.red(color) / 255.0F,
+         (float)ARGB.green(color) / 255.0F,
+         (float)ARGB.blue(color) / 255.0F,
+         1.0F
+      );
       poseStack.popPose();
       super.submit(state, poseStack, submitNodeCollector, camera);
    }

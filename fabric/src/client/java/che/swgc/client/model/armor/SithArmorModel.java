@@ -27,7 +27,7 @@ public class SithArmorModel {
          net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -7.9F, -4.0F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.25F)),
          net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F)
       );
-      net.minecraft.client.model.geom.builders.PartDefinition hat = partdefinition.addOrReplaceChild(
+      net.minecraft.client.model.geom.builders.PartDefinition hat = head.addOrReplaceChild(
          "hat",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(0, 17).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.5F)),
          net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F)
@@ -156,7 +156,7 @@ public class SithArmorModel {
       net.minecraft.client.model.geom.builders.MeshDefinition meshdefinition = new net.minecraft.client.model.geom.builders.MeshDefinition();
       net.minecraft.client.model.geom.builders.PartDefinition partdefinition = meshdefinition.getRoot();
       net.minecraft.client.model.geom.builders.PartDefinition head = partdefinition.addOrReplaceChild("head", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
-      net.minecraft.client.model.geom.builders.PartDefinition hat = partdefinition.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
+      net.minecraft.client.model.geom.builders.PartDefinition hat = head.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
       net.minecraft.client.model.geom.builders.PartDefinition body = partdefinition.addOrReplaceChild(
          "body",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
@@ -415,7 +415,7 @@ public class SithArmorModel {
          net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(1, 0).addBox(-3.9F, -4.9F, -4.1F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.25F)),
          net.minecraft.client.model.geom.PartPose.offsetAndRotation(0.0F, -3.0F, 0.0F, 0.0F, 3.1416F, 0.0F)
       );
-      net.minecraft.client.model.geom.builders.PartDefinition hat = partdefinition.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
+      net.minecraft.client.model.geom.builders.PartDefinition hat = head.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 0.0F, 0.0F));
       net.minecraft.client.model.geom.builders.PartDefinition headwear_r1 = hat.addOrReplaceChild(
          "headwear_r1",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.5F)),

@@ -7,7 +7,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.resources.Identifier;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import che.swgc.client.renderer.entity.layer.SwgcItemInHandLayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 
 @javax.annotation.ParametersAreNonnullByDefault
@@ -16,6 +16,7 @@ public class RoyalGuardianRenderer extends che.swgc.client.render.SwgcMobRendere
 
    public RoyalGuardianRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider.Context ctx) {
       super(ctx, new RoyalGuardianModel(ctx.bakeLayer(RoyalGuardianModel.LAYER_LOCATION)), 0.5F);
+      this.addLayer(new SwgcItemInHandLayer<>(this));
    }
 
    public net.minecraft.resources.Identifier getTextureLocation(che.swgc.client.render.SwgcMobRenderState state) {

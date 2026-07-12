@@ -228,6 +228,7 @@ public class SwgcItems {
       spawnEgg(spawnEggs, register, SwgcEntities.EWOK, "ewok", 6635313, 15324867);
       spawnEgg(spawnEggs, register, SwgcEntities.EWOK_SHAMAN, "ewok_shaman", 2039846, 15324867);
       spawnEgg(spawnEggs, register, SwgcEntities.JAWA, "jawa", 3812386, 16754269);
+      spawnEgg(spawnEggs, register, SwgcEntities.OBESE_WAN, "obese_wan", 16764057, 16747520);
       SPAWN_EGGS = Set.copyOf(spawnEggs);
       BiFunction<String, UnaryOperator<Builder>, ResourceKey<CreativeModeTab>> tabs = Services.REGISTERS.creativeModTabs();
       LIGHTSABERS = tabs.apply("lightsabers", builder -> builder.icon(() -> LightsaberItem.variant("yoda")).displayItems((params, output) -> {

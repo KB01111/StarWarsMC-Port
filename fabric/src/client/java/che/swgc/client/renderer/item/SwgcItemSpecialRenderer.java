@@ -10,7 +10,6 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
@@ -37,7 +36,7 @@ public final class SwgcItemSpecialRenderer implements SpecialModelRenderer<ItemS
       }
 
       float partialTick = Minecraft.getInstance().isPaused() ? 0.0F : Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
-      this.renderer.render(stack, ItemDisplayContext.NONE, poseStack, submitNodeCollector, partialTick, lightCoords, overlayCoords);
+      this.renderer.render(stack, SwgcItemRenderContext.get(), poseStack, submitNodeCollector, partialTick, lightCoords, overlayCoords);
    }
 
    @Override

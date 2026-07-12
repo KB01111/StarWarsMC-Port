@@ -154,6 +154,12 @@ public class RoyalGuardianModel extends che.swgc.client.compat.model.SinglePartE
       float headPitch = state.xRot;
 
       RoyalGuardian entity = (RoyalGuardian)state.entity;
+      if (entity != null) {
+         float partialTick = state.ageInTicks % 1.0F;
+         this.mainArm = entity.getMainArm();
+         this.sprint = entity.swgc$getSprint(partialTick);
+      }
+
       this.root.getAllParts().forEach(net.minecraft.client.model.geom.ModelPart::resetPose);
       this.updateAnimation(entity.swgc$getJumpAnimState(), RoyalGuardianAnimation.JUMP, ageInTicks);
       if (this.handSwingProgress > 0.0F) {

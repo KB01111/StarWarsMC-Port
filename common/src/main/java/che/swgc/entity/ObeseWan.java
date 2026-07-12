@@ -53,6 +53,11 @@ public class ObeseWan extends net.minecraft.world.entity.PathfinderMob {
       this.refreshDimensions();
    }
 
+   @Override
+   public EntityDimensions getDefaultDimensions(Pose pose) {
+      return super.getDefaultDimensions(pose).scale(this.getObesity(), 1.0F);
+   }
+
    public boolean isCollidable() {
       return true;
    }
@@ -278,7 +283,7 @@ public class ObeseWan extends net.minecraft.world.entity.PathfinderMob {
       }
 
       public void tick() {
-         net.minecraft.core.BlockPos pos = this.blockEntity.blockPosition();
+         net.minecraft.core.BlockPos pos = this.blockEntity.getBlockPos();
          if (Math.sqrt(ObeseWan.this.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos))) <= 4.0 + ObeseWan.this.getBoundingBox().getSize()) {
             if (ObeseWan.this.getNavigation().isInProgress()) {
                ObeseWan.this.getNavigation().stop();
