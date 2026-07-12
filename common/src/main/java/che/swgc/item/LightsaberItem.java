@@ -53,7 +53,7 @@ public class LightsaberItem extends Item {
       this(defaultHilt, IRegister.itemProperties().rarity(Rarity.UNCOMMON).stacksTo(1));
    }
 
-   public void appendHoverText(ItemStack stack, Item.Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltipAdder, TooltipFlag flag) {
+   public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltipAdder, TooltipFlag flag) {
       super.appendHoverText(stack, context, display, tooltipAdder, flag);
       if (this.defaultHilt != null && flag.isAdvanced()) {
          tooltipAdder.accept(Component.translatable("item.swgc.lightsaber.hilt", getHilt(stack)).withStyle(ChatFormatting.GRAY));
