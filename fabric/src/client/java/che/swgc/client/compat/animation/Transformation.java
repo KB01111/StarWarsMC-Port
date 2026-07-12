@@ -6,7 +6,7 @@ import net.minecraft.client.animation.Keyframe;
 public final class Transformation {
    private final AnimationChannel channel;
 
-   public Transformation(Targets target, Keyframe[] keyframes) {
+   public Transformation(Target target, Keyframe[] keyframes) {
       this.channel = new AnimationChannel(target.toTarget(), keyframes);
    }
 

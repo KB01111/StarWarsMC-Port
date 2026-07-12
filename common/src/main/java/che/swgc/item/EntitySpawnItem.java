@@ -1,5 +1,7 @@
 package che.swgc.item;
 
+import che.swgc.SwgcItemData;
+import che.swgc.entity.SwgcSpawnEggData;
 import che.swgc.reg.IRegister;
 import java.util.function.Supplier;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -39,7 +41,7 @@ public class EntitySpawnItem extends Item {
             BlockPos spawnPos = source.pos().relative(direction);
 
             try {
-               this.type.get()
+               Entity entity = this.type.get()
                   .spawn(
                      source.level(),
                      stack,
@@ -49,6 +51,9 @@ public class EntitySpawnItem extends Item {
                      direction != Direction.UP,
                      false
                   );
+               if (entity != null) {
+                  SwgcSpawnEggData.apply(entity, SwgcItemData.getOrCreate(stack));
+               }
             } catch (Exception exception) {
                che.swgc.Constants.LOG.error("Error while dispensing spawn egg from dispenser at {}", source.pos(), exception);
                return ItemStack.EMPTY;
@@ -113,6 +118,7 @@ public class EntitySpawnItem extends Item {
             return InteractionResult.FAIL;
          }
 
+         SwgcSpawnEggData.apply(entity, SwgcItemData.getOrCreate(stack));
          serverLevel.gameEvent(player, GameEvent.ENTITY_PLACE, spawnPos);
          return InteractionResult.SUCCESS;
       }

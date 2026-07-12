@@ -1,54 +1,70 @@
 package che.swgc.client.renderer.entity;
 
 import che.swgc.client.model.PlasmaRodModel;
+import che.swgc.client.render.SwgcEntityRenderState;
 import che.swgc.entity.BlasterBolt;
-import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.Mth;
 import com.mojang.blaze3d.vertex.PoseStack;
-import che.swgc.client.compat.render.MultiBufferSource;
-import net.minecraft.client.renderer.OverlayTexture;
-import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.core.RotationAxis;
+import com.mojang.math.Axis;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.core.ColorHelper.Argb;
-import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.Mth;
+import net.minecraft.util.Unit;
 
-@javax.annotation.ParametersAreNonnullByDefault
-public class BlasterBoltRenderer extends net.minecraft.client.renderer.entity.EntityRenderer<BlasterBolt> {
+public class BlasterBoltRenderer extends EntityRenderer<BlasterBolt, SwgcEntityRenderState> {
    private final PlasmaRodModel model;
 
-   public BlasterBoltRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider.Context context) {
+   public BlasterBoltRenderer(EntityRendererProvider.Context context) {
       super(context);
-      this.model = new PlasmaRodModel(context.getPart(PlasmaRodModel.LAYER_LOCATION), true, 0.75F, 0.5F);
+      this.model = new PlasmaRodModel(context.bakeLayer(PlasmaRodModel.LAYER_LOCATION), true, 0.75F, 0.5F);
    }
 
-   public void render(BlasterBolt entity, float entityYaw, float partialTick, com.mojang.blaze3d.vertex.PoseStack poseStack, che.swgc.client.compat.render.MultiBufferSource buffer, int packedLight) {
-      poseStack.push();
-      poseStack.multiply(net.minecraft.core.RotationAxis.POSITIVE_Y.rotationDegrees(entityYaw));
-      poseStack.multiply(net.minecraft.core.RotationAxis.POSITIVE_X.rotationDegrees(-net.minecraft.util.Mth.lerp(partialTick, entity.prevPitch, entity.getXRot()) + 90.0F));
+   @Override
+   public SwgcEntityRenderState createRenderState() {
+      return new SwgcEntityRenderState();
+   }
+
+   @Override
+   public void extractRenderState(BlasterBolt entity, SwgcEntityRenderState state, float partialTick) {
+      super.extractRenderState(entity, state, partialTick);
+      state.entity = entity;
+      state.yaw = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
+      state.pitch = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
+   }
+
+   @Override
+   public void submit(SwgcEntityRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+      BlasterBolt entity = (BlasterBolt)state.entity;
+      if (entity == null) {
+         super.submit(state, poseStack, submitNodeCollector, camera);
+         return;
+      }
+
+      poseStack.pushPose();
+      poseStack.mulPose(Axis.YP.rotationDegrees(state.yaw));
+      poseStack.mulPose(Axis.XP.rotationDegrees(-state.pitch + 90.0F));
       poseStack.translate(0.0F, -0.375F, 0.0F);
-      net.minecraft.resources.Identifier texture = this.textureLocation(entity);
-      this.model.render(poseStack, buffer.getBuffer(this.model.getLayer(texture)), 15728640, net.minecraft.client.renderer.OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-      this.model.render(poseStack, buffer.getBuffer(net.minecraft.client.renderer.rendertype.RenderType.getBeaconBeam(texture, false)), 15728640, net.minecraft.client.renderer.OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+      Identifier texture = PlasmaRodModel.DEFAULT_TEXTURE;
+      submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, this.model.renderType(texture), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, null, state.outlineColor, null);
+      submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, RenderTypes.beaconBeam(texture, false), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, null, state.outlineColor, null);
       int color = entity.getColor();
-      this.model
-         .setupAndRenderOutline(
-            poseStack,
-            buffer.getBuffer(net.minecraft.client.renderer.rendertype.RenderType.getBeaconBeam(texture, true)),
-            15728640,
-            net.minecraft.client.renderer.OverlayTexture.DEFAULT_UV,
-            (float)net.minecraft.core.ColorHelper.Argb.getRed(color) / 255.0F,
-            (float)net.minecraft.core.ColorHelper.Argb.getGreen(color) / 255.0F,
-            (float)net.minecraft.core.ColorHelper.Argb.getBlue(color) / 255.0F,
-            1.0F
-         );
-      poseStack.pop();
-      super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
-   }
-
-   public net.minecraft.resources.Identifier textureLocation(BlasterBolt entity) {
-      return PlasmaRodModel.DEFAULT_TEXTURE;
+      this.model.setupAndRenderOutline(
+         poseStack,
+         submitNodeCollector,
+         RenderTypes.beaconBeam(texture, true),
+         state.lightCoords,
+         OverlayTexture.NO_OVERLAY,
+         (float)ARGB.red(color) / 255.0F,
+         (float)ARGB.green(color) / 255.0F,
+         (float)ARGB.blue(color) / 255.0F,
+         1.0F
+      );
+      poseStack.popPose();
+      super.submit(state, poseStack, submitNodeCollector, camera);
    }
 }

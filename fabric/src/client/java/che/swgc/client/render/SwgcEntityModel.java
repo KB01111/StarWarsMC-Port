@@ -2,13 +2,13 @@ package che.swgc.client.render;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 public abstract class SwgcEntityModel<S extends SwgcMobRenderState> extends EntityModel<S> {
    protected final ModelPart root;
 
    protected SwgcEntityModel(ModelPart root) {
-      super(root, RenderType::entitySolid);
+      super(root);
       this.root = root;
    }
 

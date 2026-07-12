@@ -42,7 +42,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 @javax.annotation.ParametersAreNonnullByDefault
-public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.LivingEntity> extends che.swgc.client.compat.model.SinglePartEntityModel<T> {
+public class StarWarsWeaponWielderModel extends che.swgc.client.compat.model.SinglePartEntityModel<che.swgc.client.render.SwgcMobRenderState> {
    private static final HashMap<net.minecraft.world.item.Item, StarWarsWeaponWielderModel.Animations> ANIMATIONS_PER_ITEM = new HashMap<>();
    private final net.minecraft.client.model.geom.ModelPart root;
    private final net.minecraft.client.model.geom.ModelPart body;
@@ -57,7 +57,7 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
    public boolean customLeftItemPos;
 
    public StarWarsWeaponWielderModel(net.minecraft.client.model.geom.ModelPart root, Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> renderType) {
-      super(renderType);
+      super(root);
       this.root = root;
       this.body = root.getChild("body");
       this.head = this.body.getChild("head");
@@ -70,7 +70,7 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
    }
 
    public StarWarsWeaponWielderModel(net.minecraft.client.model.geom.ModelPart root) {
-      this(root, net.minecraft.client.renderer.rendertype.RenderType::getEntityCutoutNoCull);
+      this(root, net.minecraft.client.renderer.rendertype.RenderTypes::entityCutout);
    }
 
    public StarWarsWeaponWielderModel() {
@@ -101,8 +101,16 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
       );
    }
 
-   public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-      this.root.traverse().forEach(net.minecraft.client.model.geom.ModelPart::resetTransform);
+   public void setupAnim(che.swgc.client.render.SwgcMobRenderState state) {
+      super.setupAnim(state);
+      float limbSwing = state.walkAnimationPos;
+      float limbSwingAmount = state.walkAnimationSpeed;
+      float ageInTicks = state.ageInTicks;
+      float netHeadYaw = state.yRot;
+      float headPitch = state.xRot;
+
+      net.minecraft.world.entity.LivingEntity entity = (net.minecraft.world.entity.LivingEntity)state.entity;
+      this.root.getAllParts().forEach(net.minecraft.client.model.geom.ModelPart::resetPose);
       net.minecraft.world.item.ItemStack stack = entity.getMainHandItem();
       if (stack.getItem() instanceof LightsaberItem && entity instanceof ForcePossessor forcePossessor) {
          boolean dualWielding = false;
@@ -114,8 +122,8 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
          }
 
          float partialTick = ageInTicks % 1.0F;
-         net.minecraft.world.level.Level lvl = net.minecraft.client.Minecraft.getInstance().world;
-         float animTicks = lvl != null ? (float)(lvl.getTime() - LightsaberItem.getActivatedTick(stack)) + partialTick : 25.0F;
+         net.minecraft.world.level.Level lvl = net.minecraft.client.Minecraft.getInstance().level;
+         float animTicks = lvl != null ? (float)(lvl.getGameTime() - LightsaberItem.getActivatedTick(stack)) + partialTick : 25.0F;
          if (!LightsaberItem.isActive(stack)) {
             animTicks = 25.0F - animTicks;
          }
@@ -137,8 +145,8 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
 
          if (forcePossessor.isLightsaberAttacking() && forcePossessor.swgc$getLightsaberAttack() == LightsaberAttack.OBI_ANI) {
             this.animateMovement(LightsaberWielderAnimation.ACTIVATION, Float.MAX_VALUE, limbSwingAmount, 1.0F, -1.0F);
-            this.rightArm.resetTransform();
-            this.leftArm.resetTransform();
+            this.rightArm.resetPose();
+            this.leftArm.resetPose();
             this.animateMovement(
                dualWielding ? LightsaberDualWielderAnimation.OBI_ANI : LightsaberWielderAnimation.OBI_ANI,
                (float)forcePossessor.swgc$getForceTicks() + partialTick,
@@ -148,8 +156,8 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
             );
          } else if (forcePossessor.isUsingForce()) {
             this.animateMovement(LightsaberWielderAnimation.ACTIVATION, Float.MAX_VALUE, limbSwingAmount, 1.0F, -1.0F);
-            this.rightArm.resetTransform();
-            this.leftArm.resetTransform();
+            this.rightArm.resetPose();
+            this.leftArm.resetPose();
             this.animateMovement(
                forcePossessor.swgc$getForceSecondaryAction() == ForceSecondaryAction.BLOCK
                   ? (dualWielding ? LightsaberDualWielderAnimation.BLOCK : LightsaberWielderAnimation.BLOCK)
@@ -173,8 +181,8 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
             }
 
             if (this.handSwingProgress > 0.0F) {
-               this.rightArm.resetTransform();
-               this.leftArm.resetTransform();
+               this.rightArm.resetPose();
+               this.leftArm.resetPose();
                che.swgc.client.compat.animation.Animation[] anims = dualWielding ? LightsaberDualWielderAnimation.ATTACKS : LightsaberWielderAnimation.ATTACKS;
                che.swgc.client.compat.animation.Animation anim = anims[forcePossessor.swgc$getBaseAttack() >= 0
                   ? forcePossessor.swgc$getBaseAttack() % anims.length
@@ -210,9 +218,9 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
             if (entity.onGround()) {
                wielder.swgc$getJumpAnimState().stop();
             } else {
-               wielder.swgc$getJumpAnimState().startIfStopped(entity.age);
+               wielder.swgc$getJumpAnimState().startIfStopped(entity.tickCount);
                this.updateAnimation(wielder.swgc$getJumpAnimState(), animations.jump(), ageInTicks);
-               walk -= (float)wielder.swgc$getJumpAnimState().getTimeRunning() / 250.0F;
+               walk -= (float)wielder.swgc$getJumpAnimState().getTimeInMillis(ageInTicks) / 250.0F;
             }
 
             if (walk > 0.0F) {
@@ -251,10 +259,10 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
       }
 
       float yRot = netHeadYaw * (float) Math.PI / 180.0F;
-      float xRot = entity.getRoll() > 4 ? (float) (-Math.PI / 4) : headPitch * (float) Math.PI / 180.0F;
+      float xRot = Math.max((float) (-Math.PI / 4), headPitch * (float) Math.PI / 180.0F);
       this.head.yRot += yRot;
       this.head.xRot += xRot;
-      if (entity.isInSneakingPose()) {
+      if (entity.isCrouching()) {
          this.body.xRot += 0.5F;
          this.head.xRot -= 0.5F;
          this.rightArm.xRot -= 0.5F;
@@ -266,28 +274,28 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
       return this.root;
    }
 
-   public boolean shouldOverride(T entity) {
-      return !entity.isInSwimmingPose() && entity instanceof ForcePossessor && entity.getMainHandItem().getItem() instanceof LightsaberItem
-         || entity instanceof StarWarsWeaponWielder && ANIMATIONS_PER_ITEM.containsKey(entity.getMainHandItem().getItem());
+   public boolean shouldOverride(net.minecraft.world.entity.LivingEntity entity) {
+      return !entity.isSwimming() && (entity instanceof ForcePossessor && entity.getMainHandItem().getItem() instanceof LightsaberItem
+         || entity instanceof StarWarsWeaponWielder && ANIMATIONS_PER_ITEM.containsKey(entity.getMainHandItem().getItem()));
    }
 
    public void translateToItem(com.mojang.blaze3d.vertex.PoseStack poseStack, net.minecraft.world.entity.HumanoidArm arm) {
-      (arm == net.minecraft.world.entity.HumanoidArm.LEFT ? this.leftItem : this.rightItem).rotate(poseStack);
+      (arm == net.minecraft.world.entity.HumanoidArm.LEFT ? this.leftItem : this.rightItem).translateAndRotate(poseStack);
    }
 
    public void animJediJump(net.minecraft.world.entity.Entity entity, net.minecraft.client.model.HumanoidModel<?> model, float partialTick) {
       if (!entity.onGround()) {
-         Queue values = new ArrayDeque<>();
+         Queue<Vector3f> values = new ArrayDeque<>();
 
          for (net.minecraft.client.model.geom.ModelPart modelPart : new net.minecraft.client.model.geom.ModelPart[]{
             model.head, model.hat, model.rightArm, model.leftArm, model.rightLeg, model.leftLeg
          }) {
-            values.add(new Vector3f(modelPart.pivotX, modelPart.pivotY, modelPart.pivotZ));
+            values.add(new Vector3f(modelPart.x, modelPart.y, modelPart.z));
             values.add(new Vector3f(modelPart.xRot, modelPart.yRot, modelPart.zRot));
          }
 
          for (net.minecraft.client.model.geom.ModelPart modelPart : new net.minecraft.client.model.geom.ModelPart[]{this.root, this.head, this.body, this.rightArm, this.leftArm, this.rightLeg, this.leftLeg}) {
-            modelPart.resetTransform();
+            modelPart.resetPose();
          }
 
          float ticks = (float)((ForcePossessor)entity).swgc$getForceTicks() + partialTick;
@@ -298,49 +306,49 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
          for (net.minecraft.client.model.geom.ModelPart modelPart : new net.minecraft.client.model.geom.ModelPart[]{
             model.head, model.hat, model.rightArm, model.leftArm, model.rightLeg, model.leftLeg
          }) {
-            Vector3f vector3f = values.remove().lerp(new Vector3f(modelPart.pivotX, modelPart.pivotY, modelPart.pivotZ), scale);
-            modelPart.setPivot(vector3f.x, vector3f.y, vector3f.z);
+            Vector3f vector3f = values.remove().lerp(new Vector3f(modelPart.x, modelPart.y, modelPart.z), scale);
+            modelPart.setPos(vector3f.x, vector3f.y, vector3f.z);
             vector3f = values.remove().lerp(new Vector3f(modelPart.xRot, modelPart.yRot, modelPart.zRot), scale);
-            modelPart.setAngles(vector3f.x, vector3f.y, vector3f.z);
+            modelPart.setRotation(vector3f.x, vector3f.y, vector3f.z);
          }
       }
    }
 
    public void copyTo(net.minecraft.client.model.HumanoidModel<?> model) {
       Matrix4f pose = new Matrix4f()
-         .translate(this.root.pivotX, this.root.pivotY, this.root.pivotZ)
+         .translate(this.root.x, this.root.y, this.root.z)
          .rotateZYX(this.root.zRot, this.root.yRot, this.root.xRot);
       translateAndRotate(pose, this.rightLeg, model.rightLeg, new Vector3f());
       translateAndRotate(pose, this.leftLeg, model.leftLeg, new Vector3f());
       pose = translateAndRotate(pose, this.body, model.body, new Vector3f(0.0F, -13.0F, 0.0F));
       translateAndRotate(pose, this.head, model.head, new Vector3f());
-      model.hat.copyTransform(model.head);
+      model.hat.loadPose(model.head.storePose());
       translateAndRotate(pose, this.rightArm, model.rightArm, new Vector3f());
       translateAndRotate(pose, this.leftArm, model.leftArm, new Vector3f());
-      if (model instanceof net.minecraft.client.model.player.PlayerModel<?> playerModel) {
-         playerModel.leftPants.copyTransform(playerModel.leftLeg);
-         playerModel.rightPants.copyTransform(playerModel.rightLeg);
-         playerModel.leftSleeve.copyTransform(playerModel.leftArm);
-         playerModel.rightSleeve.copyTransform(playerModel.rightArm);
-         playerModel.jacket.copyTransform(playerModel.body);
+      if (model instanceof net.minecraft.client.model.player.PlayerModel playerModel) {
+         playerModel.leftPants.loadPose(playerModel.leftLeg.storePose());
+         playerModel.rightPants.loadPose(playerModel.rightLeg.storePose());
+         playerModel.leftSleeve.loadPose(playerModel.leftArm.storePose());
+         playerModel.rightSleeve.loadPose(playerModel.rightArm.storePose());
+         playerModel.jacket.loadPose(playerModel.body.storePose());
       }
    }
 
    private static Matrix4f translateAndRotate(Matrix4f pose, net.minecraft.client.model.geom.ModelPart modelPart, net.minecraft.client.model.geom.ModelPart modelPart1, Vector3f offset) {
       Matrix4f output = new Matrix4f(pose)
-         .translate(modelPart.pivotX, modelPart.pivotY, modelPart.pivotZ)
+         .translate(modelPart.x, modelPart.y, modelPart.z)
          .rotateZYX(modelPart.zRot, modelPart.yRot, modelPart.xRot);
       Vector3f vector3f = output.transformPosition(offset);
-      modelPart1.setPivot(vector3f.x, vector3f.y, vector3f.z);
+      modelPart1.setPos(vector3f.x, vector3f.y, vector3f.z);
       output.getEulerAnglesZYX(vector3f);
-      modelPart1.setAngles(vector3f.x, vector3f.y, vector3f.z);
+      modelPart1.setRotation(vector3f.x, vector3f.y, vector3f.z);
       return output;
    }
 
    protected static net.minecraft.client.model.geom.ModelPart modelPart(float x, float y, Map<String, net.minecraft.client.model.geom.ModelPart> children) {
       net.minecraft.client.model.geom.ModelPart modelPart = new net.minecraft.client.model.geom.ModelPart(List.of(), children);
-      modelPart.setDefaultTransform(net.minecraft.client.model.geom.PartPose.pivot(x, y, 0.0F));
-      modelPart.resetTransform();
+      modelPart.setInitialPose(net.minecraft.client.model.geom.PartPose.offset(x, y, 0.0F));
+      modelPart.resetPose();
       return modelPart;
    }
 

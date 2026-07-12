@@ -33,7 +33,6 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.Identifier;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.CreativeModeTab.Builder;
@@ -229,6 +228,7 @@ public class SwgcItems {
       spawnEgg(spawnEggs, register, SwgcEntities.EWOK, "ewok", 6635313, 15324867);
       spawnEgg(spawnEggs, register, SwgcEntities.EWOK_SHAMAN, "ewok_shaman", 2039846, 15324867);
       spawnEgg(spawnEggs, register, SwgcEntities.JAWA, "jawa", 3812386, 16754269);
+      spawnEgg(spawnEggs, register, SwgcEntities.OBESE_WAN, "obese_wan", 16764057, 16747520);
       SPAWN_EGGS = Set.copyOf(spawnEggs);
       BiFunction<String, UnaryOperator<Builder>, ResourceKey<CreativeModeTab>> tabs = Services.REGISTERS.creativeModTabs();
       LIGHTSABERS = tabs.apply("lightsabers", builder -> builder.icon(() -> LightsaberItem.variant("yoda")).displayItems((params, output) -> {
@@ -297,14 +297,16 @@ public class SwgcItems {
                   (params, output) -> {
                      SPAWN_EGGS.forEach(supplier -> {
                         net.minecraft.world.item.ItemStack stack = supplier.get().getDefaultInstance();
-                        SwgcItemData.update(stack, tag -> tag.putString("Owner", Objects.requireNonNull(Minecraft.getInstance().player).getUUID().toString()));
+                        Services.CLIENT.getLocalPlayerUuid()
+                           .ifPresent(uuid -> SwgcItemData.update(stack, tag -> tag.putString("Owner", uuid.toString())));
                         output.accept(stack);
                      });
                      CustomArmorItem.cloneSets()
                         .forEach(
                            (material, armor) -> {
                               net.minecraft.world.item.ItemStack stack = CLONE.get().getDefaultInstance();
-                              SwgcItemData.update(stack, tag -> tag.putString("Owner", Objects.requireNonNull(Minecraft.getInstance().player).getUUID().toString()));
+                              Services.CLIENT.getLocalPlayerUuid()
+                                 .ifPresent(uuid -> SwgcItemData.update(stack, tag -> tag.putString("Owner", uuid.toString())));
                               output.accept(
                                  Clone.addSpawnEggData(
                                     stack,

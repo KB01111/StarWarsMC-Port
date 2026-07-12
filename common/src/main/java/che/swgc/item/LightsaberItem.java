@@ -3,7 +3,7 @@ package che.swgc.item;
 import che.swgc.SwgcItemAttributes;
 import che.swgc.SwgcItemData;
 
-import che.swgc.client.SwgcClientUtils;
+import che.swgc.platform.Services;
 import che.swgc.reg.IRegister;
 import che.swgc.reg.SwgcItems;
 import che.swgc.reg.SwgcSounds;
@@ -53,7 +53,7 @@ public class LightsaberItem extends Item {
       this(defaultHilt, IRegister.itemProperties().rarity(Rarity.UNCOMMON).stacksTo(1));
    }
 
-   public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltipAdder, TooltipFlag flag) {
+   public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltipAdder, TooltipFlag flag) {
       super.appendHoverText(stack, context, display, tooltipAdder, flag);
       if (this.defaultHilt != null && flag.isAdvanced()) {
          tooltipAdder.accept(Component.translatable("item.swgc.lightsaber.hilt", getHilt(stack)).withStyle(ChatFormatting.GRAY));
@@ -83,7 +83,7 @@ public class LightsaberItem extends Item {
       boolean active = isActive(stack);
       boolean isSelected = entity instanceof LivingEntity living && (living.getMainHandItem() == stack || living.getOffhandItem() == stack);
       if (level.isClientSide() && entity instanceof LivingEntity living && isSelected && active) {
-         SwgcClientUtils.tryStartLightsaberHum(living, this.humSound(stack));
+         Services.CLIENT.tryStartLightsaberHum(living, this.humSound(stack));
       }
    }
 
@@ -172,7 +172,7 @@ public class LightsaberItem extends Item {
    }
 
    public static void setActivatedTick(net.minecraft.world.item.ItemStack stack, long activatedTick) {
-      SwgcItemData.getOrCreate(stack).putLong("ActivatedTick", activatedTick);
+      SwgcItemData.update(stack, tag -> tag.putLong("ActivatedTick", activatedTick));
    }
 
    public void setActive(net.minecraft.world.item.ItemStack stack, boolean value, net.minecraft.world.entity.Entity wielder, net.minecraft.util.RandomSource random) {
@@ -198,7 +198,7 @@ public class LightsaberItem extends Item {
    }
 
    public static void setColor(net.minecraft.world.item.ItemStack stack, int color) {
-      SwgcItemData.getOrCreate(stack).putInt("Color", color);
+      SwgcItemData.update(stack, tag -> tag.putInt("Color", color));
    }
 
    public static net.minecraft.resources.Identifier getHilt(net.minecraft.world.item.ItemStack stack) {
@@ -206,7 +206,7 @@ public class LightsaberItem extends Item {
    }
 
    public static void setHilt(net.minecraft.world.item.ItemStack stack, net.minecraft.resources.Identifier hilt) {
-      SwgcItemData.getOrCreate(stack).putString("Hilt", hilt.toString());
+      SwgcItemData.update(stack, tag -> tag.putString("Hilt", hilt.getPath()));
    }
 
    private static boolean isBee(net.minecraft.world.item.ItemStack stack) {

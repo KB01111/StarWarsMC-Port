@@ -4,11 +4,10 @@ import che.swgc.item.CustomArmorItem;
 import java.util.Set;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.VertexConsumer;
-import che.swgc.client.compat.render.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -21,18 +20,21 @@ public class ThreeDimensionalArmorItemRenderer implements ItemRenderer {
    public ThreeDimensionalArmorItemRenderer(net.minecraft.client.model.geom.EntityModelSet entityModels, CustomArmorItem item) {
       net.minecraft.client.model.geom.ModelPart root = entityModels.bakeLayer(new net.minecraft.client.model.geom.ModelLayerLocation(item.layerId, item.layerName));
 
-      this.parts = (switch (item.getType()) {
-         case HELMET -> Set.of("head", "hat");
-         case CHESTPLATE -> Set.of("body", "right_arm", "left_arm");
-         default -> Set.of("right_leg", "left_leg");
-      }).stream().map(root::getChild).toArray(net.minecraft.client.model.geom.ModelPart[]::new);
+      this.parts = switch (item.getType()) {
+         case HELMET -> {
+            net.minecraft.client.model.geom.ModelPart head = root.getChild("head");
+            yield new net.minecraft.client.model.geom.ModelPart[]{head, head.getChild("hat")};
+         }
+         case CHESTPLATE -> Set.of("body", "right_arm", "left_arm").stream().map(root::getChild).toArray(net.minecraft.client.model.geom.ModelPart[]::new);
+         default -> Set.of("right_leg", "left_leg").stream().map(root::getChild).toArray(net.minecraft.client.model.geom.ModelPart[]::new);
+      };
    }
 
    @Override
-   public void render(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.ItemDisplayContext ctx, com.mojang.blaze3d.vertex.PoseStack poseStack, che.swgc.client.compat.render.MultiBufferSource src, float partialTick, int packedLight, int packedOverlay) {
+   public void render(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.ItemDisplayContext ctx, com.mojang.blaze3d.vertex.PoseStack poseStack, net.minecraft.client.renderer.SubmitNodeCollector src, float partialTick, int packedLight, int packedOverlay) {
       che.swgc.item.CustomArmorItem item = (che.swgc.item.CustomArmorItem)stack.getItem();
-      net.minecraft.client.renderer.VertexConsumer buffer = src.getBuffer(renderType(item));
-      poseStack.push();
+      net.minecraft.client.renderer.rendertype.RenderType renderType = renderType(item);
+      poseStack.pushPose();
       poseStack.scale(-1.0F, -1.0F, 1.0F);
 
       poseStack.translate(-0.5F, switch (item.getType()) {
@@ -44,16 +46,19 @@ public class ThreeDimensionalArmorItemRenderer implements ItemRenderer {
       }, 0.5F);
 
       for (net.minecraft.client.model.geom.ModelPart part : this.parts) {
-         part.render(poseStack, buffer, packedLight, packedOverlay);
+         src.submitModelPart(part, poseStack, renderType, packedLight, packedOverlay, null);
       }
 
-      poseStack.pop();
+      poseStack.popPose();
    }
 
    public static net.minecraft.client.renderer.rendertype.RenderType renderType(che.swgc.item.CustomArmorItem item) {
-      return net.minecraft.client.renderer.rendertype.RenderType.getArmorCutoutNoCull(
-         new net.minecraft.resources.Identifier(item.getMaterial().getName())
-            .withPath(path -> "textures/models/armor/" + path + "_layer_" + (item.getType() == net.minecraft.world.item.equipment.ArmorType.LEGGINGS ? "2" : "1") + ".png")
+      String materialName = CustomArmorItem.Materials.nameOf(item.getMaterial());
+      Identifier textureId = materialName != null
+         ? Identifier.parse(materialName)
+         : item.layerId;
+      return RenderTypes.armorCutoutNoCull(
+         textureId.withPath(path -> "textures/models/armor/" + path + "_layer_" + (item.getType() == ArmorType.LEGGINGS ? "2" : "1") + ".png")
       );
    }
 }

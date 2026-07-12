@@ -7,19 +7,19 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.resources.Identifier;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import che.swgc.client.renderer.entity.layer.SwgcItemInHandLayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 
 @javax.annotation.ParametersAreNonnullByDefault
-public class B1Renderer extends che.swgc.client.render.SwgcMobRenderer<B1Droid, B1Model<B1Droid>> {
+public class B1Renderer extends che.swgc.client.render.SwgcMobRenderer<B1Droid, B1Model> {
    public static final net.minecraft.resources.Identifier TEXTURE = SwgcClientUtils.entityTex("b1");
 
    public B1Renderer(net.minecraft.client.renderer.entity.EntityRendererProvider.Context ctx) {
-      super(ctx, new B1Model(ctx.getPart(B1Model.LAYER_LOCATION)), 0.15F);
-      this.addFeature(new net.minecraft.client.renderer.entity.layers.ItemInHandLayer(this, ctx.getHeldItemRenderer()));
+      super(ctx, new B1Model(ctx.bakeLayer(B1Model.LAYER_LOCATION)), 0.15F);
+      this.addLayer(new SwgcItemInHandLayer<>(this));
    }
 
-   public net.minecraft.resources.Identifier textureLocation(B1Droid b1Droid) {
+   public net.minecraft.resources.Identifier getTextureLocation(che.swgc.client.render.SwgcMobRenderState state) {
       return TEXTURE;
    }
 }

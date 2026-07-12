@@ -9,6 +9,7 @@ import che.swgc.entity.Ewok;
 import che.swgc.entity.EwokShaman;
 import che.swgc.entity.EwokSpear;
 import che.swgc.entity.Jawa;
+import che.swgc.entity.ObeseWan;
 import che.swgc.entity.RoyalGuardian;
 import che.swgc.entity.StarFighter;
 import che.swgc.entity.ThrownLightsaber;
@@ -38,6 +39,7 @@ public class SwgcEntities {
    public static final Supplier<EntityType<Ewok>> EWOK;
    public static final Supplier<EntityType<EwokShaman>> EWOK_SHAMAN;
    public static final Supplier<EntityType<Jawa>> JAWA;
+   public static final Supplier<EntityType<ObeseWan>> OBESE_WAN;
    public static final Supplier<EntityType<ThrownLightsaber>> THROWN_LIGHTSABER;
    public static final Supplier<EntityType<BlasterBolt>> BLASTER_BOLT;
    public static final Supplier<EntityType<EwokSpear>> EWOK_SPEAR;
@@ -66,6 +68,7 @@ public class SwgcEntities {
       register.accept(EWOK.get(), Ewok.createAttributes().build());
       register.accept(EWOK_SHAMAN.get(), EwokShaman.createAttributes().build());
       register.accept(JAWA.get(), Jawa.createAttributes().build());
+      register.accept(OBESE_WAN.get(), ObeseWan.createAttributes().build());
    }
 
    static {
@@ -89,6 +92,7 @@ public class SwgcEntities {
       EWOK = reg(register, "ewok", EntityType.Builder.of(Ewok::new, MobCategory.MISC).sized(0.375F, 1.4F));
       EWOK_SHAMAN = reg(register, "ewok_shaman", EntityType.Builder.of(EwokShaman::new, MobCategory.MISC).sized(0.7F, 1.93F));
       JAWA = reg(register, "jawa", EntityType.Builder.of(Jawa::new, MobCategory.MISC).sized(0.4F, 1.1F));
+      OBESE_WAN = reg(register, "obese_wan", EntityType.Builder.of(ObeseWan::new, MobCategory.MISC).sized(0.6F, 1.8F));
       THROWN_LIGHTSABER = reg(register, "thrown_lightsaber", EntityType.Builder.<ThrownLightsaber>of(ThrownLightsaber::new, MobCategory.MISC).sized(1.0F, 0.125F));
       BLASTER_BOLT = reg(register, "blaster_bolt", EntityType.Builder.<BlasterBolt>of(BlasterBolt::new, MobCategory.MISC).sized(0.125F, 0.125F));
       EWOK_SPEAR = reg(register, "ewok_spear", EntityType.Builder.<EwokSpear>of(EwokSpear::new, MobCategory.MISC).sized(0.3F, 0.3F));

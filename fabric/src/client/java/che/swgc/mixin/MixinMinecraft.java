@@ -29,8 +29,8 @@ public abstract class MixinMinecraft {
    @Redirect(
       method = {"handleKeybinds"},
       at = @At(
-         value = "FIELD",
-         target = "Lnet/minecraft/world/entity/player/Inventory;selected:I"
+         value = "INVOKE",
+         target = "Lnet/minecraft/world/entity/player/Inventory;setSelectedSlot(I)V"
       )
    )
    private void selected(net.minecraft.world.entity.player.Inventory instance, int value) {
@@ -55,7 +55,7 @@ public abstract class MixinMinecraft {
       }
 
       if (flag) {
-         instance.selectedSlot = value;
+         instance.setSelectedSlot(value);
       }
    }
 }

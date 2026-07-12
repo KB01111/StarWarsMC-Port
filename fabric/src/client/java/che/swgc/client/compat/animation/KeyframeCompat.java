@@ -1,6 +1,6 @@
 package che.swgc.client.compat.animation;
 
-import che.swgc.client.compat.animation.AnimationChannel;
+import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.Keyframe;
 import org.joml.Vector3f;
 

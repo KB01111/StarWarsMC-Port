@@ -1,6 +1,6 @@
 package che.swgc.entity;
 
-import che.swgc.client.SwgcClientUtils;
+import che.swgc.platform.Services;
 import che.swgc.network.ClientboundZRotPacket;
 import che.swgc.reg.SwgcItems;
 import che.swgc.reg.SwgcNetworking;
@@ -44,7 +44,7 @@ public class StarFighter extends AbstractArmedVehicle {
 
    public void tick() {
       if (this.level().isClientSide() && this.isNoGravity() && !this.engineHeard) {
-         SwgcClientUtils.startStarFighterNoise(this);
+         Services.CLIENT.startStarFighterNoise(this);
       }
 
       float zRotO = this.getZRot();

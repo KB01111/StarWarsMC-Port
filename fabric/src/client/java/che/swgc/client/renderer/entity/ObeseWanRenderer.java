@@ -10,20 +10,24 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 
 @javax.annotation.ParametersAreNonnullByDefault
-public class ObeseWanRenderer extends che.swgc.client.render.SwgcMobRenderer<ObeseWan, ObeseWanModel<ObeseWan>> {
+public class ObeseWanRenderer extends che.swgc.client.render.SwgcMobRenderer<ObeseWan, ObeseWanModel> {
    public static final net.minecraft.resources.Identifier TEXTURE = Identifier.fromNamespaceAndPath("swgc", "textures/entity/obese_wan.png");
 
    public ObeseWanRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider.Context ctx) {
-      super(ctx, new ObeseWanModel(ctx.getPart(ObeseWanModel.LAYER_LOCATION)), 0.25F);
+      super(ctx, new ObeseWanModel(ctx.bakeLayer(ObeseWanModel.LAYER_LOCATION)), 0.25F);
    }
 
-   protected void scale(ObeseWan livingEntity, com.mojang.blaze3d.vertex.PoseStack poseStack, float partialTickTime) {
-      super.scale(livingEntity, poseStack, partialTickTime);
-      float width = 0.9375F * livingEntity.getObesity();
-      poseStack.scale(width, 0.9375F, width);
+   @Override
+   protected void scale(che.swgc.client.render.SwgcMobRenderState state, PoseStack poseStack) {
+      super.scale(state, poseStack);
+      ObeseWan livingEntity = (ObeseWan)state.entity;
+      if (livingEntity != null) {
+         float width = 0.9375F * livingEntity.getObesity();
+         poseStack.scale(width, 0.9375F, width);
+      }
    }
 
-   public net.minecraft.resources.Identifier textureLocation(ObeseWan obeseWan) {
+   public net.minecraft.resources.Identifier getTextureLocation(che.swgc.client.render.SwgcMobRenderState state) {
       return TEXTURE;
    }
 }

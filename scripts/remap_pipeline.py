@@ -4,7 +4,7 @@ import re
 import shutil
 from pathlib import Path
 
-ROOT = Path(r"C:\Users\kevin\Projekt\StarWarsMC-Port")
+ROOT = Path(__file__).resolve().parents[1]
 YARN_TINY = ROOT / "tools" / "mappings" / "yarn-1.20.1.tiny"
 SRC = ROOT / "decompiled"
 OUT = ROOT / "remapped"

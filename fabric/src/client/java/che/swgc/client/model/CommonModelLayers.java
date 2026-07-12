@@ -19,54 +19,54 @@ public class CommonModelLayers {
    public static net.minecraft.client.model.geom.builders.MeshDefinition emptyHumanoidMesh() {
       net.minecraft.client.model.geom.builders.MeshDefinition meshdefinition = new net.minecraft.client.model.geom.builders.MeshDefinition();
       net.minecraft.client.model.geom.builders.PartDefinition partdefinition = meshdefinition.getRoot();
-      partdefinition.addChild("head", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.NONE);
-      partdefinition.addChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.NONE);
-      partdefinition.addChild("body", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.NONE);
-      partdefinition.addChild("right_arm", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(-5.0F, 2.0F, 0.0F));
-      partdefinition.addChild("left_arm", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(5.0F, 2.0F, 0.0F));
-      partdefinition.addChild("right_leg", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(-1.9F, 12.0F, 0.0F));
-      partdefinition.addChild("left_leg", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(1.9F, 12.0F, 0.0F));
+      net.minecraft.client.model.geom.builders.PartDefinition head = partdefinition.addOrReplaceChild("head", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
+      head.addOrReplaceChild("hat", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
+      partdefinition.addOrReplaceChild("body", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
+      partdefinition.addOrReplaceChild("right_arm", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(-5.0F, 2.0F, 0.0F));
+      partdefinition.addOrReplaceChild("left_arm", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(5.0F, 2.0F, 0.0F));
+      partdefinition.addOrReplaceChild("right_leg", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(-1.9F, 12.0F, 0.0F));
+      partdefinition.addOrReplaceChild("left_leg", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(1.9F, 12.0F, 0.0F));
       return meshdefinition;
    }
 
    public static net.minecraft.client.model.geom.builders.LayerDefinition createEmptyPlayerModel() {
       net.minecraft.client.model.geom.builders.MeshDefinition meshdefinition = emptyHumanoidMesh();
       net.minecraft.client.model.geom.builders.PartDefinition partdefinition = meshdefinition.getRoot();
-      partdefinition.addChild("ear", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.NONE);
-      partdefinition.addChild("cloak", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.NONE);
-      partdefinition.addChild("left_sleeve", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(5.0F, 2.0F, 0.0F));
-      partdefinition.addChild("right_sleeve", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(-5.0F, 2.0F, 0.0F));
-      partdefinition.addChild("left_pants", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(1.9F, 12.0F, 0.0F));
-      partdefinition.addChild("right_pants", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(-1.9F, 12.0F, 0.0F));
-      partdefinition.addChild("jacket", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.NONE);
-      return net.minecraft.client.model.geom.builders.LayerDefinition.of(meshdefinition, 64, 32);
+      partdefinition.addOrReplaceChild("ear", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
+      partdefinition.addOrReplaceChild("cloak", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
+      partdefinition.addOrReplaceChild("left_sleeve", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(5.0F, 2.0F, 0.0F));
+      partdefinition.addOrReplaceChild("right_sleeve", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(-5.0F, 2.0F, 0.0F));
+      partdefinition.addOrReplaceChild("left_pants", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(1.9F, 12.0F, 0.0F));
+      partdefinition.addOrReplaceChild("right_pants", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(-1.9F, 12.0F, 0.0F));
+      partdefinition.addOrReplaceChild("jacket", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.ZERO);
+      return net.minecraft.client.model.geom.builders.LayerDefinition.create(meshdefinition, 64, 32);
    }
 
    public static net.minecraft.client.model.geom.builders.LayerDefinition createSimpleInnerLayer() {
       net.minecraft.client.model.geom.builders.MeshDefinition meshdefinition = emptyHumanoidMesh();
       net.minecraft.client.model.geom.builders.PartDefinition partdefinition = meshdefinition.getRoot();
-      net.minecraft.client.model.geom.builders.PartDefinition right_leg = partdefinition.addChild(
+      net.minecraft.client.model.geom.builders.PartDefinition right_leg = partdefinition.addOrReplaceChild(
          "right_leg",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(0, 16)
-            .cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
-            .uv(16, 16)
-            .cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.2F)),
-         net.minecraft.client.model.geom.PartPose.pivot(-2.0F, 12.0F, 0.0F)
+            .texOffs(0, 16)
+            .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
+            .texOffs(16, 16)
+            .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.2F)),
+         net.minecraft.client.model.geom.PartPose.offset(-2.0F, 12.0F, 0.0F)
       );
-      net.minecraft.client.model.geom.builders.PartDefinition left_leg = partdefinition.addChild(
+      net.minecraft.client.model.geom.builders.PartDefinition left_leg = partdefinition.addOrReplaceChild(
          "left_leg",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(0, 16)
-            .mirrored()
-            .cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
-            .mirrored(false)
-            .uv(16, 16)
-            .mirrored()
-            .cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.2F))
-            .mirrored(false),
-         net.minecraft.client.model.geom.PartPose.pivot(2.0F, 12.0F, 0.0F)
+            .texOffs(0, 16)
+            .mirror()
+            .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
+            .mirror(false)
+            .texOffs(16, 16)
+            .mirror()
+            .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.2F))
+            .mirror(false),
+         net.minecraft.client.model.geom.PartPose.offset(2.0F, 12.0F, 0.0F)
       );
-      return net.minecraft.client.model.geom.builders.LayerDefinition.of(meshdefinition, 64, 32);
+      return net.minecraft.client.model.geom.builders.LayerDefinition.create(meshdefinition, 64, 32);
    }
 }

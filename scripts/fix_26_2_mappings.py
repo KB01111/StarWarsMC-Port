@@ -2,7 +2,7 @@
 """Fix incorrect Yarn->Mojang 26.2 remappings from full_remap.py."""
 from pathlib import Path
 
-ROOT = Path(r"C:\Users\kevin\Projekt\StarWarsMC-Port")
+ROOT = Path(__file__).resolve().parents[1]
 
 JAVA_DIRS = [
     ROOT / "common" / "src" / "main" / "java",

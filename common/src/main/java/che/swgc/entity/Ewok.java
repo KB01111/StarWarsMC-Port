@@ -78,7 +78,11 @@ public class Ewok extends AbstractEwok implements net.minecraft.world.entity.mon
    }
 
    public Ewok.Variant getVariant() {
-      return Ewok.Variant.valueOf(this.entityData.get(DATA_VARIANT_ID));
+      try {
+         return Ewok.Variant.valueOf(this.entityData.get(DATA_VARIANT_ID));
+      } catch (IllegalArgumentException ignored) {
+         return Ewok.Variant.ORANGE;
+      }
    }
 
    public void setVariant(Ewok.Variant variant) {

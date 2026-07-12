@@ -53,6 +53,11 @@ public class ObeseWan extends net.minecraft.world.entity.PathfinderMob {
       this.refreshDimensions();
    }
 
+   @Override
+   public EntityDimensions getDefaultDimensions(Pose pose) {
+      return super.getDefaultDimensions(pose).scale(this.getObesity(), 1.0F);
+   }
+
    public boolean isCollidable() {
       return true;
    }
