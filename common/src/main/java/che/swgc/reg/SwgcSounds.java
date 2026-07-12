@@ -32,7 +32,7 @@ public class SwgcSounds {
    }
 
    static {
-      IRegister<SoundEvent> register = Services.REGISTERS.sound();
+      IRegister<SoundEvent> register = Services.REGISTERS.sounds();
       Function<String, Supplier<SoundEvent>> func = id -> register.register(id, () -> SoundEvent.createVariableRangeEvent(net.minecraft.resources.Identifier.fromNamespaceAndPath("swgc", id)));
       ATRT_STEP = func.apply("entity.atrt.step");
       STARFIGHTER_ENGINE = func.apply("entity.starfighter.engine");
