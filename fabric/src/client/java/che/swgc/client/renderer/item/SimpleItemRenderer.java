@@ -4,7 +4,6 @@ import che.swgc.client.model.item.BlasterModel;
 import che.swgc.client.model.item.EwokSpearModel;
 import che.swgc.client.model.item.EwokStaffModel;
 import che.swgc.client.model.item.StaticItemModel;
-import che.swgc.client.renderer.entity.EwokSpearRenderer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.Identifier;
 import net.minecraft.client.model.Model;
@@ -29,11 +28,11 @@ public class SimpleItemRenderer<T extends net.minecraft.client.model.Model> impl
 
    @Override
    public void render(net.minecraft.world.item.ItemStack itemStack, net.minecraft.world.item.ItemDisplayContext ctx, com.mojang.blaze3d.vertex.PoseStack poseStack, che.swgc.client.compat.render.MultiBufferSource src, float partialTick, int packedLight, int packedOverlay) {
-      poseStack.push();
+      poseStack.pushPose();
       poseStack.scale(-1.0F, -1.0F, 1.0F);
       poseStack.translate(-0.5F, -1.501F, 0.5F);
-      this.model.render(poseStack, src.getBuffer(this.model.getLayer(this.texture)), packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-      poseStack.pop();
+      this.model.render(poseStack, src.getBuffer(this.model.renderType(this.texture)), packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+      poseStack.popPose();
    }
 
    public static SimpleItemRenderer<BlasterModel> blaster(net.minecraft.client.model.geom.EntityModelSet models, String modelName) {
@@ -44,7 +43,7 @@ public class SimpleItemRenderer<T extends net.minecraft.client.model.Model> impl
    }
 
    public static SimpleItemRenderer<EwokSpearModel> ewokSpear(net.minecraft.client.model.geom.EntityModelSet models) {
-      return new SimpleItemRenderer<>(new EwokSpearModel(models.bakeLayer(EwokSpearModel.LAYER_LOCATION)), EwokSpearRenderer.TEXTURE);
+      return new SimpleItemRenderer<>(new EwokSpearModel(models.bakeLayer(EwokSpearModel.LAYER_LOCATION)), Identifier.fromNamespaceAndPath("swgc", "textures/entity/ewok_spear.png"));
    }
 
    public static SimpleItemRenderer<EwokStaffModel> ewokStaff(net.minecraft.client.model.geom.EntityModelSet models) {

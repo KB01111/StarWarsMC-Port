@@ -339,7 +339,7 @@ public class StarWarsWeaponWielderModel<T extends net.minecraft.world.entity.Liv
 
    protected static net.minecraft.client.model.geom.ModelPart modelPart(float x, float y, Map<String, net.minecraft.client.model.geom.ModelPart> children) {
       net.minecraft.client.model.geom.ModelPart modelPart = new net.minecraft.client.model.geom.ModelPart(List.of(), children);
-      modelPart.setDefaultTransform(net.minecraft.client.model.geom.PartPose.pivot(x, y, 0.0F));
+      modelPart.setDefaultTransform(net.minecraft.client.model.geom.PartPose.offset(x, y, 0.0F));
       modelPart.resetTransform();
       return modelPart;
    }

@@ -149,7 +149,9 @@ public enum ForceSecondaryAction implements ForceAction {
                TELEKINESIS.tick(player);
             }
 
-            entity.hurt(entity.damageSources().playerAttack(player), 2.0F);
+            if (player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+               entity.hurtServer(serverLevel, entity.damageSources().playerAttack(player), 2.0F);
+            }
             entity.invulnerableTime = 15;
             if (data[1] == 0) {
                entity.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);

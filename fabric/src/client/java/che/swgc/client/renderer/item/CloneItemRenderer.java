@@ -31,7 +31,7 @@ public class CloneItemRenderer implements ItemRenderer {
       (armor.equals("swgc:clone_104th_Battalion") ? this.battalion104 : this.head)
          .render(
             poseStack,
-            src.getBuffer(net.minecraft.client.renderer.rendertype.RenderType.getArmorCutoutNoCull(new net.minecraft.resources.Identifier(armor).withPath(path -> "textures/models/armor/" + path + "_layer_1.png"))),
+            src.getBuffer(net.minecraft.client.renderer.rendertype.RenderTypes.armorCutoutNoCull(new net.minecraft.resources.Identifier(armor).withPath(path -> "textures/models/armor/" + path + "_layer_1.png"))),
             packedLight,
             packedOverlay
          );

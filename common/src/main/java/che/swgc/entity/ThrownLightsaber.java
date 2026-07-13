@@ -78,7 +78,9 @@ public class ThrownLightsaber extends net.minecraft.world.entity.projectile.Proj
    }
 
    protected void onEntityHit(net.minecraft.world.phys.EntityHitResult result) {
-      result.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), 7.0F);
+      if (this.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+         result.getEntity().hurtServer(serverLevel, this.damageSources().thrown(this, this.getOwner()), 7.0F);
+      }
    }
 
    @Override

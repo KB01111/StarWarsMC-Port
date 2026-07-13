@@ -17,9 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin({net.minecraft.world.entity.LivingEntity.class})
 public abstract class MixinLivingEntity extends net.minecraft.world.entity.Entity {
    @Shadow
-   public boolean handSwinging;
+   public boolean swinging;
    @Shadow
-   public int handSwingTicks;
+   public int swingTime;
 
    private MixinLivingEntity(net.minecraft.world.entity.EntityType<?> $$0, net.minecraft.world.level.Level $$1) {
       super($$0, $$1);
@@ -33,8 +33,8 @@ public abstract class MixinLivingEntity extends net.minecraft.world.entity.Entit
       at = {@At("TAIL")}
    )
    public void updateSwingTime(CallbackInfo ci) {
-      if (this.handSwinging
-         && this.handSwingTicks == 0
+      if (this.swinging
+         && this.swingTime == 0
          && (!(this instanceof ForcePossessor forcePossessor) || !forcePossessor.isLightsaberAttacking())
          && LightsaberItem.isActive(this.getMainHandItem())) {
          if (this instanceof ForcePossessor forcePossessorx) {

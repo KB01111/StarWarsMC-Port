@@ -63,7 +63,9 @@ public enum LightsaberAttack implements ForceAction {
          for (LightsaberDamageField damageField : damageFields) {
             boolean whoosh = i == tick1;
             if (whoosh || (i += damageField.ticks()) > tick1) {
-               damageField.damage(entity.level(), entity);
+               if (entity.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                  damageField.damage(serverLevel, entity);
+               }
                if (whoosh) {
                   entity.level()
                      .playSound(

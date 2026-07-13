@@ -23,7 +23,7 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.core.ColorHelper.Argb;
+import net.minecraft.util.ARGB;
 
 @javax.annotation.ParametersAreNonnullByDefault
 public class LightsaberItemRenderer implements ItemRenderer {
@@ -40,7 +40,7 @@ public class LightsaberItemRenderer implements ItemRenderer {
    public void render(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.ItemDisplayContext ctx, com.mojang.blaze3d.vertex.PoseStack poseStack, che.swgc.client.compat.render.MultiBufferSource src, float partialTick, int packedLight, int packedOverlay) {
       boolean active = LightsaberItem.isActive(stack);
       float anim = this.getAnim(stack, active, partialTick);
-      poseStack.push();
+      poseStack.pushPose();
       net.minecraft.resources.Identifier id = LightsaberItem.getHilt(stack);
       float downscale;
       if (id.equals(EZRA_HILT)) {
@@ -75,17 +75,17 @@ public class LightsaberItemRenderer implements ItemRenderer {
       int color = LightsaberItem.getColor(stack);
       int color1 = props.getGlowing(anim, color);
       if (color1 != 0) {
-         float a = (float)net.minecraft.core.ColorHelper.Argb.getAlpha(color1) / 255.0F;
-         float r = (float)net.minecraft.core.ColorHelper.Argb.getRed(color1) / 255.0F;
-         float g = (float)net.minecraft.core.ColorHelper.Argb.getGreen(color1) / 255.0F;
-         float b = (float)net.minecraft.core.ColorHelper.Argb.getBlue(color1) / 255.0F;
-         props.model.render(poseStack, src.getBuffer(net.minecraft.client.renderer.rendertype.RenderType.getEntityTranslucentEmissive(props.getTexture(anim, true))), packedLight, packedOverlay, r, g, b, a);
+         float a = (float)net.minecraft.util.ARGB.alpha(color1) / 255.0F;
+         float r = (float)net.minecraft.util.ARGB.red(color1) / 255.0F;
+         float g = (float)net.minecraft.util.ARGB.green(color1) / 255.0F;
+         float b = (float)net.minecraft.util.ARGB.blue(color1) / 255.0F;
+         props.model.render(poseStack, src.getBuffer(net.minecraft.client.renderer.rendertype.RenderTypes.entityTranslucentEmissive(props.getTexture(anim, true))), packedLight, packedOverlay, r, g, b, a);
       }
 
       if (ctx != net.minecraft.world.item.ItemDisplayContext.GUI && anim > 0.0F) {
          props.model.translateToBlade(poseStack);
          poseStack.scale(-downscale, -downscale * anim, downscale);
-         float rodScale = Math.max(poseStack.peek().getPositionMatrix().m32() * -0.1F + 0.5F, 1.0F);
+         float rodScale = Math.max(poseStack.last().pose().m32() * -0.1F + 0.5F, 1.0F);
          this.bladeModel.rod.xScale = this.bladeModel.rod.zScale = rodScale;
          this.bladeModel.outlineThickness = 1.5F * rodScale;
          this.bladeModel
@@ -94,27 +94,27 @@ public class LightsaberItemRenderer implements ItemRenderer {
             );
          this.bladeModel
             .render(
-               poseStack, src.getBuffer(net.minecraft.client.renderer.rendertype.RenderType.getBeaconBeam(PlasmaRodModel.DEFAULT_TEXTURE, false)), 15728640, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F
+               poseStack, src.getBuffer(net.minecraft.client.renderer.rendertype.RenderTypes.beaconBeam(PlasmaRodModel.DEFAULT_TEXTURE, false)), 15728640, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F
             );
          this.bladeModel
             .setupAndRenderOutline(
                poseStack,
-               src.getBuffer(net.minecraft.client.renderer.rendertype.RenderType.getBeaconBeam(PlasmaRodModel.DEFAULT_TEXTURE, true)),
+               src.getBuffer(net.minecraft.client.renderer.rendertype.RenderTypes.beaconBeam(PlasmaRodModel.DEFAULT_TEXTURE, true)),
                15728640,
                packedOverlay,
-               (float)net.minecraft.core.ColorHelper.Argb.getRed(color) / 255.0F,
-               (float)net.minecraft.core.ColorHelper.Argb.getGreen(color) / 255.0F,
-               (float)net.minecraft.core.ColorHelper.Argb.getBlue(color) / 255.0F,
+               (float)net.minecraft.util.ARGB.red(color) / 255.0F,
+               (float)net.minecraft.util.ARGB.green(color) / 255.0F,
+               (float)net.minecraft.util.ARGB.blue(color) / 255.0F,
                1.0F
             );
       }
 
-      poseStack.pop();
+      poseStack.popPose();
    }
 
    protected float getAnim(net.minecraft.world.item.ItemStack stack, boolean active, float partialTick) {
-      net.minecraft.world.level.Level lvl = net.minecraft.client.Minecraft.getInstance().world;
-      float anim = lvl != null ? (float)(lvl.getTime() - LightsaberItem.getActivatedTick(stack)) : 25.0F;
+      net.minecraft.world.level.Level lvl = net.minecraft.client.Minecraft.getInstance().level;
+      float anim = lvl != null ? (float)(lvl.getGameTime() - LightsaberItem.getActivatedTick(stack)) : 25.0F;
       if (anim >= 4.0F) {
          anim = active ? 1.0F : 0.0F;
       } else {
@@ -146,7 +146,7 @@ public class LightsaberItemRenderer implements ItemRenderer {
       addProps(
          LightsaberItem.OBEEWAN_ID,
          models -> new ObeewanSaberModel(models.bakeLayer(ObeewanSaberModel.LAYER_LOCATION)),
-         props -> props.glowing((anim, color) -> net.minecraft.core.ColorHelper.Argb.lerp(anim, -8599087, -1834984))
+         props -> props.glowing((anim, color) -> net.minecraft.util.ARGB.srgbLerp(anim, -8599087, -1834984))
       );
       addProps(
          Identifier.fromNamespaceAndPath("swgc", "frog"),
@@ -165,7 +165,7 @@ public class LightsaberItemRenderer implements ItemRenderer {
 
       public Properties(Function<net.minecraft.client.model.geom.EntityModelSet, LightsaberModel> model, net.minecraft.resources.Identifier id) {
          this.id = id;
-         this.model = model.apply(net.minecraft.client.Minecraft.getInstance().getEntityModelSet());
+         this.model = model.apply(net.minecraft.client.Minecraft.getInstance().getEntityModels());
       }
 
       public Properties(net.minecraft.resources.Identifier id) {

@@ -140,7 +140,9 @@ public class EwokSpear extends net.minecraft.world.entity.projectile.arrow.Abstr
       net.minecraft.world.entity.Entity owner = this.getOwner();
       net.minecraft.world.damagesource.DamageSource src = this.damageSources().trident(this, owner == null ? this : owner);
       this.dealtDamage = true;
-      entity.hurt(src, dmg);
+      if (this.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+         entity.hurtServer(serverLevel, src, dmg);
+      }
       if (entity.getType() == net.minecraft.world.entity.EntityTypes.ENDERMAN) {
          return;
       }

@@ -18,10 +18,15 @@ public abstract class FabricMixinPlayer extends net.minecraft.world.entity.Livin
    }
 
    @Inject(
-      method = {"hurt"},
+      method = {"hurtServer"},
       at = {@At("HEAD")}
    )
-   public void hurt(net.minecraft.world.damagesource.DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
+   public void hurtServer(
+      net.minecraft.server.level.ServerLevel serverLevel,
+      net.minecraft.world.damagesource.DamageSource damageSource,
+      float f,
+      CallbackInfoReturnable<Boolean> cir
+   ) {
       che.swgc.SwgcHooks.lightsaberBlock((net.minecraft.world.entity.player.Player)(Object)this, damageSource);
    }
 
@@ -31,7 +36,7 @@ public abstract class FabricMixinPlayer extends net.minecraft.world.entity.Livin
       ordinal = 0,
       argsOnly = true
    )
-   public float fallDistance(float value) {
-      return che.swgc.SwgcHooks.playerFall((net.minecraft.world.entity.player.Player)(Object)this, value);
+   public double fallDistance(double value) {
+      return che.swgc.SwgcHooks.playerFall((net.minecraft.world.entity.player.Player)(Object)this, (float)value);
    }
 }

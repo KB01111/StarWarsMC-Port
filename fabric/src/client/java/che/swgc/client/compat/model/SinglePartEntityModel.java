@@ -1,23 +1,33 @@
 package che.swgc.client.compat.model;
 
-import che.swgc.client.compat.animation.Animation;
-import che.swgc.client.render.SwgcEntityModel;
-import che.swgc.client.render.SwgcMobRenderState;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import java.util.function.Function;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.world.entity.AnimationState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 
-public abstract class SinglePartEntityModel<S extends SwgcMobRenderState> extends SwgcEntityModel<S> {
-   public float handSwingProgress;
+public abstract class SinglePartEntityModel<T> extends Model<T> {
+   protected final ModelPart root;
 
    protected SinglePartEntityModel(ModelPart root) {
-      super(root);
+      this(root, RenderTypes::entityCutout);
    }
 
-   protected void animateMovement(Animation animation, float limbSwing, float limbSwingAmount, float speed, float scale) {
-      animation.applyWalk(this.root, limbSwing, limbSwingAmount, speed, scale);
+   protected SinglePartEntityModel(ModelPart root, Function<Identifier, RenderType> renderType) {
+      super(root, renderType);
+      this.root = root;
    }
 
-   protected void updateAnimation(AnimationState state, Animation animation, float ageInTicks) {
-      animation.apply(this.root, state, ageInTicks);
+   public RenderType getLayer(Identifier texture) {
+      return this.renderType(texture);
+   }
+
+   public void render(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+      int color = ARGB.color((int)(alpha * 255.0F), (int)(red * 255.0F), (int)(green * 255.0F), (int)(blue * 255.0F));
+      this.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, color);
    }
 }

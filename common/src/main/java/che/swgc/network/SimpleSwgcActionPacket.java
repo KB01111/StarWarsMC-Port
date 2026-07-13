@@ -26,7 +26,7 @@ public class SimpleSwgcActionPacket implements SwgcPacket.Serverbound {
 
    @Override
    public void encode(net.minecraft.network.FriendlyByteBuf buf) {
-      buf.writeVarInt(this.id);
+      buf.writeByte(this.id);
    }
 
    @Override

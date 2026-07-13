@@ -19,17 +19,30 @@ loom {
     }
 }
 
-// Custom renderers/models need a full 26.2 render-state port; exclude until ported.
+// Entity renderers/animation still need a full 26.2 render-state port.
 sourceSets.client.java {
-    exclude '**/client/renderer/**'
-    exclude '**/client/model/**'
+    exclude '**/client/renderer/entity/**'
+    exclude '**/client/renderer/blockentity/**'
     exclude '**/client/animation/**'
     exclude '**/client/render/**'
-    exclude '**/client/compat/**'
+    exclude '**/client/model/entity/**'
+    exclude '**/client/compat/animation/**'
     exclude '**/client/sound/**'
     exclude '**/client/gui/DroidCommandScreen.java'
     exclude '**/client/SwgcClientUtils.java'
-    exclude '**/mixin/**'
+    exclude '**/mixin/FabricMixinItemInHandRenderer.java'
+    exclude '**/mixin/FabricMixinLivingEntityRenderer.java'
+    exclude '**/mixin/FabricMixinMinecraft.java'
+    exclude '**/mixin/FabricMixinMouseHandler.java'
+    exclude '**/mixin/FabricMixinAbstractClientPlayer.java'
+    exclude '**/mixin/FabricMixinPlayerRenderer.java'
+    exclude '**/mixin/FabricMixinVideoSettingsScreen.java'
+    exclude '**/mixin/FabricMixinGameRenderer.java'
+    exclude '**/mixin/MixinCapeLayer.java'
+    exclude '**/mixin/MixinMinecraft.java'
+    exclude '**/mixin/MixinMouseHandler.java'
+    exclude '**/mixin/MixinPlayerModel.java'
+    exclude '**/mixin/MixinTitleScreen.java'
 }
 
 dependencies {

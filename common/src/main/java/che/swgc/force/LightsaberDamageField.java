@@ -15,7 +15,7 @@ public record LightsaberDamageField(double radius, double height, float yDegree1
       this(1.5, 2.0, yDegree1, yDegree2, damage, ticks);
    }
 
-   public void damage(net.minecraft.world.level.Level lvl, net.minecraft.world.entity.LivingEntity entity) {
+   public void damage(net.minecraft.server.level.ServerLevel lvl, net.minecraft.world.entity.LivingEntity entity) {
       net.minecraft.world.item.ItemStack stack = entity.getMainHandItem();
       boolean dualWielding = LightsaberItem.isActive(stack) && LightsaberItem.isActive(entity.getOffhandItem());
       float yBodyRot = entity.getMainArm() == net.minecraft.world.entity.HumanoidArm.RIGHT ? entity.yBodyRot : -entity.yBodyRot + this.yDegree1 - this.yDegree2;
@@ -35,7 +35,8 @@ public record LightsaberDamageField(double radius, double height, float yDegree1
          .forEach(
             entity1 -> {
                if (entity1.isAttackable()) {
-                  entity1.hurt(
+                  entity1.hurtServer(
+                     lvl,
                      entity instanceof net.minecraft.world.entity.player.Player player ? player.damageSources().playerAttack(player) : entity.damageSources().mobAttack(entity),
                      (float)this.damage
                   );

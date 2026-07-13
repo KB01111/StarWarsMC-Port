@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import che.swgc.client.compat.render.MultiBufferSource;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -31,8 +31,8 @@ public class ThreeDimensionalArmorItemRenderer implements ItemRenderer {
    @Override
    public void render(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.ItemDisplayContext ctx, com.mojang.blaze3d.vertex.PoseStack poseStack, che.swgc.client.compat.render.MultiBufferSource src, float partialTick, int packedLight, int packedOverlay) {
       che.swgc.item.CustomArmorItem item = (che.swgc.item.CustomArmorItem)stack.getItem();
-      net.minecraft.client.renderer.VertexConsumer buffer = src.getBuffer(renderType(item));
-      poseStack.push();
+      com.mojang.blaze3d.vertex.VertexConsumer buffer = src.getBuffer(renderType(item));
+      poseStack.pushPose();
       poseStack.scale(-1.0F, -1.0F, 1.0F);
 
       poseStack.translate(-0.5F, switch (item.getType()) {
@@ -47,13 +47,12 @@ public class ThreeDimensionalArmorItemRenderer implements ItemRenderer {
          part.render(poseStack, buffer, packedLight, packedOverlay);
       }
 
-      poseStack.pop();
+      poseStack.popPose();
    }
 
    public static net.minecraft.client.renderer.rendertype.RenderType renderType(che.swgc.item.CustomArmorItem item) {
-      return net.minecraft.client.renderer.rendertype.RenderType.getArmorCutoutNoCull(
-         new net.minecraft.resources.Identifier(item.getMaterial().getName())
-            .withPath(path -> "textures/models/armor/" + path + "_layer_" + (item.getType() == net.minecraft.world.item.equipment.ArmorType.LEGGINGS ? "2" : "1") + ".png")
+      return net.minecraft.client.renderer.rendertype.RenderTypes.armorCutoutNoCull(
+         Identifier.fromNamespaceAndPath("swgc", "textures/models/armor/" + item.layerId.getPath() + "_layer_" + (item.getType() == net.minecraft.world.item.equipment.ArmorType.LEGGINGS ? "2" : "1") + ".png")
       );
    }
 }

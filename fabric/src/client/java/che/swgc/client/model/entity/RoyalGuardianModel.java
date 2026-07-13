@@ -43,98 +43,98 @@ public class RoyalGuardianModel<T extends RoyalGuardian> extends che.swgc.client
    public static net.minecraft.client.model.geom.builders.LayerDefinition createBodyLayer() {
       net.minecraft.client.model.geom.builders.MeshDefinition meshdefinition = new net.minecraft.client.model.geom.builders.MeshDefinition();
       net.minecraft.client.model.geom.builders.PartDefinition partdefinition = meshdefinition.getRoot();
-      net.minecraft.client.model.geom.builders.PartDefinition armor = partdefinition.addChild("armor", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.pivot(0.0F, 24.0F, 0.0F));
+      net.minecraft.client.model.geom.builders.PartDefinition armor = partdefinition.addChild("armor", net.minecraft.client.model.geom.builders.CubeListBuilder.create(), net.minecraft.client.model.geom.PartPose.offset(0.0F, 24.0F, 0.0F));
       net.minecraft.client.model.geom.builders.PartDefinition body = armor.addChild(
          "body",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(0, 32)
-            .cuboid(-4.0041F, -11.9974F, -2.4076F, 8.0F, 12.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.2F))
-            .uv(62, 15)
-            .cuboid(-2.8041F, -0.9974F, -1.9076F, 4.0F, 1.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
-         net.minecraft.client.model.geom.PartPose.pivot(0.0041F, -12.0026F, -0.0924F)
+            .texOffs(0, 32)
+            .addBox(-4.0041F, -11.9974F, -2.4076F, 8.0F, 12.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.2F))
+            .texOffs(62, 15)
+            .addBox(-2.8041F, -0.9974F, -1.9076F, 4.0F, 1.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
+         net.minecraft.client.model.geom.PartPose.offset(0.0041F, -12.0026F, -0.0924F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition cube_r1 = body.addChild(
          "cube_r1",
-         net.minecraft.client.model.geom.builders.CubeListBuilder.create().uv(32, 50).cuboid(-1.2F, -4.0F, -5.55F, 3.0F, 8.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
-         net.minecraft.client.model.geom.PartPose.of(-4.336F, -8.2137F, 3.1424F, 0.0F, 0.0F, -0.3927F)
+         net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(32, 50).addBox(-1.2F, -4.0F, -5.55F, 3.0F, 8.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
+         net.minecraft.client.model.geom.PartPose.offsetAndRotation(-4.336F, -8.2137F, 3.1424F, 0.0F, 0.0F, -0.3927F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition cube_r2 = body.addChild(
          "cube_r2",
-         net.minecraft.client.model.geom.builders.CubeListBuilder.create().uv(16, 49).cuboid(-1.8F, -4.0F, -5.55F, 3.0F, 8.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
-         net.minecraft.client.model.geom.PartPose.of(4.3277F, -8.2137F, 3.1424F, 0.0F, 0.0F, 0.3927F)
+         net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(16, 49).addBox(-1.8F, -4.0F, -5.55F, 3.0F, 8.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
+         net.minecraft.client.model.geom.PartPose.offsetAndRotation(4.3277F, -8.2137F, 3.1424F, 0.0F, 0.0F, 0.3927F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition left_arm = body.addChild(
          "left_arm",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(52, 50)
-            .cuboid(-0.7032F, -0.3114F, -2.0F, 4.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.4F))
-            .uv(48, 0)
-            .cuboid(-1.0032F, -0.3114F, -2.0F, 4.0F, 11.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
-            .uv(62, 20)
-            .cuboid(-0.6738F, 3.8248F, -2.0F, 1.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.38F)),
-         net.minecraft.client.model.geom.PartPose.pivot(4.999F, -10.6861F, 0.0924F)
+            .texOffs(52, 50)
+            .addBox(-0.7032F, -0.3114F, -2.0F, 4.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.4F))
+            .texOffs(48, 0)
+            .addBox(-1.0032F, -0.3114F, -2.0F, 4.0F, 11.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
+            .texOffs(62, 20)
+            .addBox(-0.6738F, 3.8248F, -2.0F, 1.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.38F)),
+         net.minecraft.client.model.geom.PartPose.offset(4.999F, -10.6861F, 0.0924F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition cloak_r1 = left_arm.addChild(
          "cloak_r1",
-         net.minecraft.client.model.geom.builders.CubeListBuilder.create().uv(56, 32).cuboid(-1.775F, -2.9F, -2.225F, 4.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.37F)),
-         net.minecraft.client.model.geom.PartPose.of(1.3281F, 6.3747F, 0.225F, 0.0F, 0.0F, -0.1745F)
+         net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(56, 32).addBox(-1.775F, -2.9F, -2.225F, 4.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.37F)),
+         net.minecraft.client.model.geom.PartPose.offsetAndRotation(1.3281F, 6.3747F, 0.225F, 0.0F, 0.0F, -0.1745F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition right_arm = body.addChild(
          "right_arm",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(56, 41)
-            .cuboid(-3.2968F, -0.3114F, -2.0F, 4.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.4F))
-            .uv(0, 49)
-            .cuboid(-2.9968F, -0.3114F, -2.0F, 4.0F, 11.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
-            .uv(32, 63)
-            .cuboid(-0.3761F, 3.8248F, -2.0F, 1.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.38F)),
-         net.minecraft.client.model.geom.PartPose.pivot(-5.0073F, -10.6861F, 0.0924F)
+            .texOffs(56, 41)
+            .addBox(-3.2968F, -0.3114F, -2.0F, 4.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.4F))
+            .texOffs(0, 49)
+            .addBox(-2.9968F, -0.3114F, -2.0F, 4.0F, 11.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
+            .texOffs(32, 63)
+            .addBox(-0.3761F, 3.8248F, -2.0F, 1.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.38F)),
+         net.minecraft.client.model.geom.PartPose.offset(-5.0073F, -10.6861F, 0.0924F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition cloak_r2 = right_arm.addChild(
          "cloak_r2",
-         net.minecraft.client.model.geom.builders.CubeListBuilder.create().uv(52, 59).cuboid(-2.225F, -2.9F, -2.225F, 4.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.37F)),
-         net.minecraft.client.model.geom.PartPose.of(-1.3281F, 6.3747F, 0.225F, 0.0F, 0.0F, 0.1745F)
+         net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(52, 59).addBox(-2.225F, -2.9F, -2.225F, 4.0F, 5.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.37F)),
+         net.minecraft.client.model.geom.PartPose.offsetAndRotation(-1.3281F, 6.3747F, 0.225F, 0.0F, 0.0F, 0.1745F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition head = body.addChild(
          "head",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(0, 0)
-            .cuboid(-4.0F, -7.9F, -4.0F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.5F))
-            .uv(0, 16)
-            .cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
-         net.minecraft.client.model.geom.PartPose.pivot(-0.0041F, -11.9974F, 0.0924F)
+            .texOffs(0, 0)
+            .addBox(-4.0F, -7.9F, -4.0F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.5F))
+            .texOffs(0, 16)
+            .addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
+         net.minecraft.client.model.geom.PartPose.offset(-0.0041F, -11.9974F, 0.0924F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition left_leg = armor.addChild(
          "left_leg",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(32, 17)
-            .cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
-            .uv(42, 33)
-            .cuboid(-1.8918F, -0.8379F, -2.5F, 2.0F, 12.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.19F)),
-         net.minecraft.client.model.geom.PartPose.pivot(2.0F, -12.0F, 0.0F)
+            .texOffs(32, 17)
+            .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F))
+            .texOffs(42, 33)
+            .addBox(-1.8918F, -0.8379F, -2.5F, 2.0F, 12.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.19F)),
+         net.minecraft.client.model.geom.PartPose.offset(2.0F, -12.0F, 0.0F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition cube_r3 = left_leg.addChild(
          "cube_r3",
-         net.minecraft.client.model.geom.builders.CubeListBuilder.create().uv(32, 0).cuboid(-1.3F, -6.15F, -2.625F, 3.0F, 12.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.22F)),
-         net.minecraft.client.model.geom.PartPose.of(0.8652F, 5.1943F, 0.125F, 0.0F, 0.0F, -0.0873F)
+         net.minecraft.client.model.geom.builders.CubeListBuilder.create().texOffs(32, 0).addBox(-1.3F, -6.15F, -2.625F, 3.0F, 12.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.22F)),
+         net.minecraft.client.model.geom.PartPose.offsetAndRotation(0.8652F, 5.1943F, 0.125F, 0.0F, 0.0F, -0.0873F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition right_leg = armor.addChild(
          "right_leg",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(48, 15)
-            .cuboid(-0.1082F, -0.8379F, -2.5F, 2.0F, 12.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.19F))
-            .uv(26, 33)
-            .cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
-         net.minecraft.client.model.geom.PartPose.pivot(-2.0F, -12.0F, 0.0F)
+            .texOffs(48, 15)
+            .addBox(-0.1082F, -0.8379F, -2.5F, 2.0F, 12.0F, 5.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.19F))
+            .texOffs(26, 33)
+            .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.0F)),
+         net.minecraft.client.model.geom.PartPose.offset(-2.0F, -12.0F, 0.0F)
       );
       net.minecraft.client.model.geom.builders.PartDefinition cube_r4 = right_leg.addChild(
          "cube_r4",
          net.minecraft.client.model.geom.builders.CubeListBuilder.create()
-            .uv(24, 62)
-            .cuboid(-1.7F, -6.15F, -2.375F, 3.0F, 12.0F, 1.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.22F))
-            .uv(16, 62)
-            .cuboid(-1.7F, -6.15F, 1.625F, 3.0F, 12.0F, 1.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.22F)),
-         net.minecraft.client.model.geom.PartPose.of(-0.8652F, 5.1943F, -0.125F, 0.0F, 0.0F, 0.0873F)
+            .texOffs(24, 62)
+            .addBox(-1.7F, -6.15F, -2.375F, 3.0F, 12.0F, 1.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.22F))
+            .texOffs(16, 62)
+            .addBox(-1.7F, -6.15F, 1.625F, 3.0F, 12.0F, 1.0F, new net.minecraft.client.model.geom.builders.CubeDeformation(0.22F)),
+         net.minecraft.client.model.geom.PartPose.offsetAndRotation(-0.8652F, 5.1943F, -0.125F, 0.0F, 0.0F, 0.0873F)
       );
       return net.minecraft.client.model.geom.builders.LayerDefinition.of(meshdefinition, 128, 128);
    }

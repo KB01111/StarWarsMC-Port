@@ -32,7 +32,7 @@
   "entity.swgc.royal_guardian": "Emperor's Royal Guardian",
   "entity.swgc.thrown_lightsaber": "Thrown Lightsaber",
   "force.swgc.jump.notOnGround": "Jump while holding %s to use",
-  "gamerule.forceObtainment": "Force obtainment",
+  "gamerule.force_obtainment": "Force obtainment",
   "gui.swgc.blaster.charge": "Charge:",
   "gui.swgc.command": "Command: %s",
   "gui.swgc.command.combat_aid": "Combat Aid",

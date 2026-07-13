@@ -32,7 +32,7 @@
   "entity.swgc.royal_guardian": "Императорский стражник",
   "entity.swgc.thrown_lightsaber": "Брошенный световой меч",
   "force.swgc.jump.notOnGround": "Прыгните, зажав %s, чтобы использовать",
-  "gamerule.forceObtainment": "Получение Силы",
+  "gamerule.force_obtainment": "Получение Силы",
   "gui.swgc.blaster.charge": "Заряд:",
   "gui.swgc.command": "Команда: %s",
   "gui.swgc.command.combat_aid": "Боевая поддержка",

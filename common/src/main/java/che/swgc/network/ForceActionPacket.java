@@ -38,7 +38,7 @@ public class ForceActionPacket implements SwgcPacket.PlayerBidirectional {
       if (this.action == null) {
          buf.writeVarInt(-1);
       } else {
-         buf.writeEnum((Enum)this.action);
+         buf.writeVarInt(((Enum<?>)this.action).ordinal());
       }
    }
 

@@ -1,13 +1,13 @@
 package che.swgc.client.renderer.item;
 
-import che.swgc.client.SwgcClientUtils;
+import net.minecraft.resources.Identifier;
 import che.swgc.client.model.item.ForcePikeModel;
 import che.swgc.item.ForcePikeItem;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import che.swgc.client.compat.render.MultiBufferSource;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.util.RandomSource;
@@ -16,16 +16,16 @@ import org.joml.Matrix4f;
 
 public class ForcePikeItemRenderer extends SimpleItemRenderer<ForcePikeModel> {
    public ForcePikeItemRenderer(net.minecraft.client.model.geom.EntityModelSet models) {
-      super(new ForcePikeModel(models.bakeLayer(ForcePikeModel.LAYER_LOCATION)), SwgcClientUtils.entityTex("item/force_pike"));
+      super(new ForcePikeModel(models.bakeLayer(ForcePikeModel.LAYER_LOCATION)), Identifier.fromNamespaceAndPath("swgc", "textures/entity/item/force_pike.png"));
    }
 
    @Override
    public void render(net.minecraft.world.item.ItemStack itemStack, net.minecraft.world.item.ItemDisplayContext ctx, com.mojang.blaze3d.vertex.PoseStack poseStack, che.swgc.client.compat.render.MultiBufferSource src, float partialTick, int packedLight, int packedOverlay) {
       super.render(itemStack, ctx, poseStack, src, partialTick, packedLight, packedOverlay);
       if (ForcePikeItem.isActive(itemStack)) {
-         poseStack.push();
+         poseStack.pushPose();
          poseStack.translate(0.5F, 1.5F, 0.5F);
-         net.minecraft.util.RandomSource random = net.minecraft.util.RandomSource.create(net.minecraft.util.Util.getMeasuringTimeMs() / 25L);
+         net.minecraft.util.RandomSource random = net.minecraft.util.RandomSource.create(net.minecraft.util.Util.getMillis() / 25L);
          float[] xCoords = new float[4];
          float[] zCoords = new float[4];
          xCoords[0] = xCoords[2] = zCoords[0] = zCoords[2] = 0.0F;
@@ -33,11 +33,11 @@ public class ForcePikeItemRenderer extends SimpleItemRenderer<ForcePikeModel> {
          xCoords[2] = random.nextFloat() * 0.375F - 0.1875F;
          zCoords[1] = random.nextFloat() * 0.375F - 0.1875F;
          zCoords[2] = random.nextFloat() * 0.375F - 0.1875F;
-         net.minecraft.client.renderer.VertexConsumer buffer = src.getBuffer(net.minecraft.client.renderer.rendertype.RenderType.getLightning());
-         Matrix4f pose = poseStack.peek().getPositionMatrix();
+         VertexConsumer buffer = src.getBuffer(net.minecraft.client.renderer.rendertype.RenderTypes.lightning());
+         Matrix4f pose = poseStack.last().pose();
 
          for (int layer = 0; layer < 4; layer++) {
-            random.setSeed(net.minecraft.util.Util.getMeasuringTimeMs() / 25L);
+            random.setSeed(net.minecraft.util.Util.getMillis() / 25L);
 
             for (int y = 0; y < 3; y++) {
                float x0 = xCoords[y];
@@ -55,13 +55,13 @@ public class ForcePikeItemRenderer extends SimpleItemRenderer<ForcePikeModel> {
             }
          }
 
-         poseStack.pop();
+         poseStack.popPose();
       }
    }
 
    private static void quad(
       Matrix4f matrix4f,
-      net.minecraft.client.renderer.VertexConsumer buffer,
+      VertexConsumer buffer,
       float x0,
       float z0,
       int y,
@@ -77,9 +77,9 @@ public class ForcePikeItemRenderer extends SimpleItemRenderer<ForcePikeModel> {
       boolean front1
    ) {
       float yf = (float)y * -0.125F;
-      buffer.vertex(matrix4f, x0 + (right0 ? width : -width), yf, z0 + (front0 ? width : -width)).color(r, g, b, 1.0F).next();
-      buffer.vertex(matrix4f, x0 + (right1 ? width : -width), yf, z0 + (front1 ? width : -width)).color(r, g, b, 1.0F).next();
-      buffer.vertex(matrix4f, x1 + (right1 ? width : -width), yf - 0.125F, z1 + (front1 ? width : -width)).color(r, g, b, 1.0F).next();
-      buffer.vertex(matrix4f, x1 + (right0 ? width : -width), yf - 0.125F, z1 + (front0 ? width : -width)).color(r, g, b, 1.0F).next();
+      buffer.addVertex(matrix4f, x0 + (right0 ? width : -width), yf, z0 + (front0 ? width : -width)).setColor(r, g, b, 1.0F);
+      buffer.addVertex(matrix4f, x0 + (right1 ? width : -width), yf, z0 + (front1 ? width : -width)).setColor(r, g, b, 1.0F);
+      buffer.addVertex(matrix4f, x1 + (right1 ? width : -width), yf - 0.125F, z1 + (front1 ? width : -width)).setColor(r, g, b, 1.0F);
+      buffer.addVertex(matrix4f, x1 + (right0 ? width : -width), yf - 0.125F, z1 + (front0 ? width : -width)).setColor(r, g, b, 1.0F);
    }
 }

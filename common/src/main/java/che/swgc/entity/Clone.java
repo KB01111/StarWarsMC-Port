@@ -131,16 +131,18 @@ public class Clone extends CommandableMob implements net.minecraft.world.entity.
          : SwgcEntities.CLONE.get().getDescription();
       stack.set(DataComponents.CUSTOM_NAME, displayName);
 
-      for (net.minecraft.world.item.equipment.ArmorType type : net.minecraft.world.item.equipment.ArmorType.values()) {
-         net.minecraft.world.item.ItemStack armorPiece = armor.apply(type);
-         if (armorPiece != null && !armorPiece.isEmpty()) {
-            SwgcItemData.getOrCreate(stack).put(type.getName(), SwgcItemData.saveStack(armorPiece));
+      SwgcItemData.update(stack, tag -> {
+         for (net.minecraft.world.item.equipment.ArmorType type : net.minecraft.world.item.equipment.ArmorType.values()) {
+            net.minecraft.world.item.ItemStack armorPiece = armor.apply(type);
+            if (armorPiece != null && !armorPiece.isEmpty()) {
+               tag.put(type.getName(), SwgcItemData.saveStack(armorPiece));
+            }
          }
-      }
 
-      if (weapon != null) {
-         SwgcItemData.getOrCreate(stack).put("Weapon", SwgcItemData.saveStack(weapon));
-      }
+         if (weapon != null) {
+            tag.put("Weapon", SwgcItemData.saveStack(weapon));
+         }
+      });
 
       return stack;
    }

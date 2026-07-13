@@ -77,7 +77,9 @@ public class ObeseWan extends net.minecraft.world.entity.PathfinderMob {
             .getEntities(this, this.getBoundingBox().inflate((double)fallDistance * 0.25, 1.0, (double)fallDistance * 0.25))
             .forEach(
                entity -> {
-                  entity.hurt(entity.damageSources().mobAttack(this), fallDistance * this.getObesity());
+                  if (this.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                     entity.hurtServer(serverLevel, entity.damageSources().mobAttack(this), fallDistance * this.getObesity());
+                  }
                   entity.push(
                      entity.position().subtract(this.position()).normalize().scale((double)fallDistance * 0.25).add(0.0, 0.25, 0.0)
                   );
