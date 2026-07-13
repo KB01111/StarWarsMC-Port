@@ -79,13 +79,13 @@ public interface VertexConsumer {
 		Matrix4f matrix = pose.pose();
 		Vector3f normal = pose.transformNormal(normalVec, new Vector3f());
 		int lightEmission = quad.materialInfo().lightEmission();
-
+		Vector3f pos = new Vector3f();
 		for (int vertex = 0; vertex < 4; vertex++) {
 			Vector3fc position = quad.position(vertex);
 			long packedUv = quad.packedUV(vertex);
 			int vertexColor = instance.getColor(vertex);
 			int light = instance.getLightCoordsWithEmission(vertex, lightEmission);
-			Vector3f pos = matrix.transformPosition(position, new Vector3f());
+			matrix.transformPosition(position, pos);
 			float u = UVPair.unpackU(packedUv);
 			float v = UVPair.unpackV(packedUv);
 			this.addVertex(pos.x(), pos.y(), pos.z(), vertexColor, u, v, instance.overlayCoords(), light, normal.x(), normal.y(), normal.z());
