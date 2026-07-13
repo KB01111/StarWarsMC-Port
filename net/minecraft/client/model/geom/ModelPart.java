@@ -128,13 +128,14 @@ public final class ModelPart {
 	}
 
 	public void getExtentsForGui(final PoseStack poseStack, final Consumer<Vector3fc> output) {
+		Vector3f pos = new Vector3f();
 		this.visit(poseStack, (pose, partPath, cubeIndex, cube) -> {
 			for (ModelPart.Polygon polygon : cube.polygons) {
 				for (ModelPart.Vertex vertex : polygon.vertices()) {
 					float x = vertex.worldX();
 					float y = vertex.worldY();
 					float z = vertex.worldZ();
-					Vector3f pos = pose.pose().transformPosition(x, y, z, new Vector3f());
+					pose.pose().transformPosition(x, y, z, pos);
 					output.accept(pos);
 				}
 			}
